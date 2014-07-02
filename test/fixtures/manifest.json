@@ -1,0 +1,133 @@
+{
+
+    // default:
+    // Default information about the manifest
+
+    "name": "Masthead",
+    "version": "0.1.0",
+    "description": "Asset manifest for static content and resources",
+
+    // route: ( reserved )
+    // If a route matches a requested path then an asset dependency tree
+    // is assembled which details the CSS, JS and any meta tags required
+    //
+    // reserved keys:
+    // route, html, css, js, options
+
+    "route": {
+
+        // Top level site resources
+
+        "config": {
+
+            "assets": {
+
+                // meta tags for the requested route
+
+                "html": [
+
+                    {
+
+                        "tag": "meta",
+                        "data": {
+                            "property": "og:site_name",
+                            "content": "Masthead"
+                        }
+
+                    }
+
+                ],
+
+                // css for for the requested route
+
+                "css": ["a.css", "b.css"],
+
+                // js for the requested route
+
+                "js": ["a.js", "b.js"]
+
+            }
+
+        },
+
+        "news": {
+
+        },
+
+        "sport": {
+
+            "afl": {
+
+                "config": {
+
+                    "assets": {
+
+                        // meta tags for the requested route
+
+                        "html": [
+
+                            {
+
+                                "tag": "meta",
+                                "data": {
+                                    "property": "og:site_name",
+                                    "content": "Masthead"
+                                }
+
+                            }
+
+                        ],
+
+                        // css for for the requested route
+
+                        "css": ["c.css", "d.css"],
+
+                        // js for the requested route
+
+                        "js": ["c.js", "d.js"]
+
+                    }
+
+                }
+            }
+
+        },
+
+        "entertainment": {
+
+            "config": {
+
+                "assets": {
+
+                    // meta tags for the requested route
+
+                    "html": [
+
+                        {
+
+                            "tag": "meta",
+                            "data": {
+                                "property": "og:site_name",
+                                "content": "Masthead"
+                            }
+
+                        }
+
+                    ],
+
+                    // css for for the requested route
+
+                    "css": ["e.css", "f.css"],
+
+                    // js for the requested route
+
+                    "js": ["e.js", "f.js"]
+
+                }
+
+            }
+
+        }
+
+    }
+}

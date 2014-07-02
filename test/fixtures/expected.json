@@ -1,0 +1,17 @@
+{
+    "sub_route": {
+
+        "assets": {
+            "html": [{
+                "tag": "meta",
+                "data": {
+                    "property": "og:site_name",
+                    "content": "Masthead"
+                }
+            }],
+            "css": ["a.css", "b.css", "c.css", "d.css"],
+            "js": ["a.js", "b.js", "c.js", "d.js"]
+        }
+
+    }
+}

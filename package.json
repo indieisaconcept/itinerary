@@ -1,0 +1,43 @@
+{
+  "name": "boulevard",
+  "description": "Manage static content & resources based on a given route",
+  "version": "0.0.0",
+  "homepage": "http://github.com/indieisaconcept/gridlock",
+  "bugs": "https://github.com/indieisaconcept/gridlock/issues",
+  "license": "MIT",
+  "main": "index.js",
+  "author": {
+    "name": "Jonathan Barnett",
+    "email": "me@indieisaconcept.com",
+    "url": "indieisaconcept.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indieisaconcept/boulevard"
+  },
+  "keywords": [],
+  "dependencies": {
+    "core-util-is": "^1.0.1",
+    "debug": "1.0.2",
+    "deepmerge": "^0.2.7",
+    "js-yaml": "^3.0.2",
+    "json5": "^0.2.0"
+  },
+  "devDependencies": {
+    "coveralls": "^2.10.0",
+    "gulp": "^3.8.5",
+    "gulp-bump": "^0.1.8",
+    "gulp-jscs": "^0.4.2",
+    "gulp-jshint": "^1.5.5",
+    "gulp-load-plugins": "^0.5.1",
+    "gulp-mocha": "^0.4.1",
+    "gulp-plumber": "^0.6.2",
+    "gulp-util": "^2.2.19",
+    "jshint-stylish": "^0.2.0",
+    "should": "^4.0.4"
+  },
+  "scripts": {
+    "coveralls": "gulp test && cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "gulp test"
+  }
+}
