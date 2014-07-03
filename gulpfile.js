@@ -3,6 +3,7 @@
 var gulp     = require('gulp'),
     plugins  = require('gulp-load-plugins')(),
     sequence = require('run-sequence'),
+    util     = plugins.util,
     paths    = {};
 
 // paths:
@@ -32,7 +33,8 @@ gulp.task('style', function() {
 gulp.task('lint', function() {
     return gulp.src(paths.watch)
         .pipe(plugins.jshint('.jshintrc'))
-        .pipe(plugins.jshint.reporter('jshint-stylish'));
+        .pipe(plugins.jshint.reporter('jshint-stylish'))
+        .on('error', util.log);
 });
 
 // task:mocha
@@ -46,7 +48,8 @@ gulp.task('mocha', function() {
     .pipe(plugins.plumber())
     .pipe(plugins.mocha({
         reporter: 'list'
-    }));
+    }))
+    .on('error', util.log);
 });
 
 // task:bump
@@ -59,7 +62,8 @@ gulp.task('bump', ['test'], function() {
         .pipe(plugins.bump({
             type: bumpType
         }))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./'))
+        .on('error', util.log);
 });
 
 // task:watch
