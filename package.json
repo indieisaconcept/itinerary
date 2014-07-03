@@ -21,7 +21,9 @@
     "debug": "1.0.2",
     "deepmerge": "^0.2.7",
     "js-yaml": "^3.0.2",
-    "json5": "^0.2.0"
+    "json5": "^0.2.0",
+    "lodash": "^2.4.1",
+    "lodash-deep": "^1.2.1"
   },
   "devDependencies": {
     "coveralls": "^2.10.1",
