@@ -20,7 +20,7 @@ var boulevard = require('../lib/boulevard.js'),
         advanced  : boulevard(fixtures.advanced.source)
     };
 
-describe('Boulevard', function() {
+describe('boulevard', function() {
 
     describe('should', function () {
 
