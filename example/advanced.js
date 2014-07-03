@@ -37,24 +37,11 @@ var boulevard = require('../'),
         // conditions
 
         filters: {
-
-            'assets.js': function (/* String */ template, /* Array */ collection, route, manifest) {
-
-                collection = collection.map(function (item) {
-                    return helpers.rever(item, manifest.version);
-                }).filter(function (item) {
-                    return helpers.include(item, template);
-                });
-
-                return collection;
-
-            }
-
+            'assets.css': helpers('rev include'),
+            'assets.js' : helpers('rev include')
         }
 
     });
-
-// Default
 
 ['/entertainment/story-fni0cx12-1226975734488'].forEach(function (item) {
     processor(item).on('data', function (err, data) {
