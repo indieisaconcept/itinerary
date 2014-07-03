@@ -1,25 +1,31 @@
-/*jshint -W068 */
+/*jshint -W068, unused: false */
 
 'use strict';
 
 var boulevard = require('../lib/boulevard.js'),
-    util      = require('./lib/util'),
 
-    fixtures  = require('./fixtures/expected.json'),
-    should    = require('should');
+    fixtures  = require('./fixtures'),
+    should    = require('should'),
 
-describe('boulevard', function() {
+    // processor:
+    // configure boulevard processed required for testing
+    // here. There should be a 1:1 mapping between a processor
+    // and a fixture.
+    //
+    // fixtures can be found in ./fixtures
 
-    var processor;
+    processor = {
+        simple    : boulevard(fixtures.simple.source),
+        inherited : boulevard(fixtures.inherited.source),
+        advanced  : boulevard(fixtures.advanced.source)
+    };
 
-    before(function () {
-        processor = boulevard('./test/fixtures/manifest.json');
-    });
+describe('Boulevard', function() {
 
     describe('should', function () {
 
         it('be a function', function() {
-            return boulevard.should.an.Function;
+            var result = boulevard.should.an.Function;
         });
 
         it('throw an error if no manifest path specified', function () {
@@ -36,47 +42,41 @@ describe('boulevard', function() {
 
         describe('return', function () {
 
-            it('a function if a manifest is found', function () {
-                return processor.should.an.Function;
+            it('function if a manifest is found', function () {
+                var result = processor.simple.should.an.Function &&
+                             processor.advanced.should.an.Function;
             });
 
-            it('a default config for a route that does not exist', function (done) {
-                processor('/some/path/that/does/not/exist').on('data', function (err, data) {
-                    return data.should.be.an.Object && done();
-                });
-            });
+            describe('config', function () {
 
-            // top level route
-
-            it('a config for a route that does exist', function (done) {
-                processor('/').on('data', function (err, data) {
-                    return data.should.be.an.Object && done();
-                });
-            });
-
-            // children level
-
-            it('a config for a sub route that does exist', function (done) {
-
-                util.async(['entertainment'], function (item, next) {
-
-                    processor(item).on('data', function (err, data) {
-                        return next(null, data);
+                it('for a route that does exist', function (done) {
+                    processor.simple('/').on('data', function (err, data) {
+                        var result = data.should.be.an.Object;
+                        done();
                     });
+                });
 
-                }, function (err, results) {
-
-                    if (err) {
-                        return done(err);
-                    }
-
-                    results.forEach(function (result) {
-                        result.should.be.an.Object;
-                        console.log(result);
-                        should(result).eql(fixtures.sub_route);
+                it('for a route that does not exist', function (done) {
+                    processor.simple('/some/path/that/does/not/exist').on('data', function (err, data) {
+                        var result = data.should.be.an.Object;
+                        done();
                     });
+                });
 
-                    done();
+                it('for a child route', function (done) {
+
+                    processor.simple('/foo').on('data', function (err, data) {
+
+                        if (err) {
+                            return done(err);
+                        }
+
+                        var result = data.should.be.an.Object &&
+                                     should(data).eql(fixtures.simple.source.route.foo.config);
+
+                        done();
+
+                    });
 
                 });
 
