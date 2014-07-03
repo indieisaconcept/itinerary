@@ -2,8 +2,8 @@
   "name": "boulevard",
   "description": "Manage static content & resources based on a given route",
   "version": "0.0.0",
-  "homepage": "http://github.com/indieisaconcept/gridlock",
-  "bugs": "https://github.com/indieisaconcept/gridlock/issues",
+  "homepage": "http://github.com/indieisaconcept/boulevard",
+  "bugs": "https://github.com/indieisaconcept/boulevard/issues",
   "license": "MIT",
   "main": "index.js",
   "author": {
