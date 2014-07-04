@@ -9,7 +9,6 @@
 'use strict';
 
 var boulevard = require('../'),
-    helpers   = require('../lib/helpers'),
     processor = boulevard('./test/fixtures/manifest.json', {
 
         // template:
@@ -37,14 +36,14 @@ var boulevard = require('../'),
         // required
 
         helpers: {
-            'assets.css': helpers.use('rev include'),
-            'assets.js' : helpers.use('rev include')
+            'assets.css': boulevard.helpers.use('rev include'),
+            'assets.js' : boulevard.helpers.use('rev include')
         }
 
     });
 
 ['/entertainment/story-fni0cx12-1226975734488'].forEach(function (item) {
     processor(item).on('data', function (err, data) {
-        //console.log(JSON.stringify(data, null, 4));
+        console.log(JSON.stringify(data, null, 4));
     });
 });
