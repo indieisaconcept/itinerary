@@ -42,12 +42,19 @@ gulp.task('lint', function() {
 // Perform UNIT testing
 
 gulp.task('mocha', function() {
-    gulp.src(paths.tests, {
-        cwd: __dirname
+    gulp.src(['./test/**/*.js'], {
+        read: false
     })
     .pipe(plugins.plumber())
+    .pipe(plugins.coverage.instrument({
+        pattern: ['./lib/**/*.js'],
+        debugDirectory: '_temp'
+    }))
     .pipe(plugins.mocha({
         reporter: 'list'
+    }))
+    .pipe(plugins.coverage.report({
+        outFile: 'test/coverage/index.html'
     }))
     .on('error', util.log);
 });
