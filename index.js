@@ -8,4 +8,7 @@
 
 'use strict';
 
-module.exports = require('./lib/boulevard');
+var boulevard = require('./lib/boulevard');
+
+boulevard.helpers = require('./lib/helpers');
+module.exports    = boulevard;

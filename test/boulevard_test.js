@@ -2,7 +2,7 @@
 
 'use strict';
 
-var boulevard = require('../lib/boulevard'),
+var boulevard = require('../'),
     helpers   = require('../lib/helpers'),
 
     fixtures  = require('./fixtures'),
@@ -50,6 +50,10 @@ describe('boulevard', function() {
 
         it('be a function', function() {
             var result = boulevard.should.an.Function;
+        });
+
+        it('should have a helpers method', function() {
+            var result = boulevard.helpers.should.an.Object;
         });
 
         it('throw an error if no manifest path specified', function () {
