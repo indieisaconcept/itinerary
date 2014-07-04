@@ -42,6 +42,24 @@ describe('boulevard helper', function() {
             var result = helpers.register.should.be.a.Function;
         });
 
+        it ('should throw an error if no name passed', function () {
+            (function () {
+                helpers.register();
+            }).should.throw();
+        });
+
+        it ('should throw an error if no handler passed', function () {
+            (function () {
+                helpers.register('nohandler');
+            }).should.throw();
+        });
+
+        it ('should throw an error if a duplicate handler name is detected', function () {
+            (function () {
+                helpers.register('rev');
+            }).should.throw();
+        });
+
         it ('should register a helper function', function () {
             helpers.register('mycustomhelper', function () {});
             var result = helpers.helper.mycustomhelper.should.be.a.Function;
