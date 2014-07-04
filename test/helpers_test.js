@@ -42,8 +42,10 @@ describe('boulevard helper', function() {
                     version: '1.0.0'
                 });
 
-            should(result[0].href).eql('a_100.css');
-            should(result[2].src).eql('a_100.js');
+            should(result[0]).eql('a_100.css');
+            should(result[1].href).eql('b_100.css');
+            should(result[2]).eql('a_100.js');
+            should(result[3].src).eql('b_100.js');
 
         });
 
