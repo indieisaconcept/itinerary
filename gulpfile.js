@@ -86,7 +86,7 @@ gulp.task('watch', ['test'], function() {
 // Aliases for a given colleciton of tasks
 
 gulp.task('test', function (cb) {
-    sequence('lint', 'mocha', cb);
+    sequence('style', 'lint', 'mocha', cb);
 });
 
 gulp.task('release', ['bump']);
