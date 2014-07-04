@@ -2,7 +2,8 @@
 
 'use strict';
 
-var boulevard = require('../lib/boulevard.js'),
+var boulevard = require('../lib/boulevard'),
+    helpers   = require('../lib/helpers'),
 
     fixtures  = require('./fixtures'),
     should    = require('should'),
@@ -15,9 +16,32 @@ var boulevard = require('../lib/boulevard.js'),
     // fixtures can be found in ./fixtures
 
     processor = {
+
         simple    : boulevard(fixtures.simple.source),
         inherited : boulevard(fixtures.inherited.source),
-        advanced  : boulevard(fixtures.advanced.source)
+        advanced  : boulevard(fixtures.advanced.source),
+
+        // templates:
+        // These are rules which are used to classify a route. These values,
+        // can then be used for filtering. They can either be a regex or a
+        // function
+
+        templates : boulevard(fixtures.simple.source, {
+            templates: {
+                story: /story-(.{8})-(\d{13})/
+            }
+        }),
+
+        // helpers:
+        // These are used to process a collection and modify or filter values as
+        // required
+
+        helpers: boulevard(fixtures.helpers.source, {
+            helpers: {
+                'assets.js': helpers('rev')
+            }
+        })
+
     };
 
 describe('boulevard', function() {
@@ -38,6 +62,27 @@ describe('boulevard', function() {
             (function () {
                 boulevard('./manifest.json');
             }).should.throw();
+        });
+
+        describe('discover', function () {
+
+            it('template type for a give route if set', function (done) {
+
+               processor.templates('/story-12345678-1234567891011').on('data', function (err, data) {
+
+                    if (err) {
+                        return done(err);
+                    }
+
+                    var result = data.should.be.an.Object &&
+                                 should(data.templates.story).eql(true);
+
+                    done();
+
+                });
+
+            });
+
         });
 
         describe('return', function () {
@@ -72,7 +117,41 @@ describe('boulevard', function() {
                         }
 
                         var result = data.should.be.an.Object &&
-                                     should(data).eql(fixtures.simple.source.route.foo.config);
+                                     should(data.config.assets).eql(fixtures.simple.source.route.foo.config.assets);
+
+                        done();
+
+                    });
+
+                });
+
+                it('for a route containing an inherited top level config', function (done) {
+
+                    processor.inherited('/foo').on('data', function (err, data) {
+
+                        if (err) {
+                            return done(err);
+                        }
+
+                        var result = data.should.be.an.Object &&
+                                     should(data.config.assets).eql(fixtures.inherited.expected.config.assets);
+
+                        done();
+
+                    });
+
+                });
+
+                it('for a route that has been modified by a helper', function (done) {
+
+                    processor.helpers('/foo').on('data', function (err, data) {
+
+                        if (err) {
+                            return done(err);
+                        }
+
+                        var result = data.should.be.an.Object &&
+                                     should(data.config).eql(fixtures.helpers.expected.config);
 
                         done();
 
