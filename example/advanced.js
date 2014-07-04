@@ -32,11 +32,11 @@ var boulevard = require('../'),
 
         },
 
-        // filters:
-        // These are used to filter a collection of matches based upon set
-        // conditions
+        // helpers:
+        // These are used to process a collection and modify or filter values as
+        // required
 
-        filters: {
+        helpers: {
             'assets.css': helpers('rev include'),
             'assets.js' : helpers('rev include')
         }
