@@ -38,7 +38,7 @@ var boulevard = require('../lib/boulevard'),
 
         helpers: boulevard(fixtures.helpers.source, {
             helpers: {
-                'assets.js': helpers('rev')
+                'assets.js': helpers.use('rev')
             }
         })
 

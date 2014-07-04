@@ -24,19 +24,36 @@ var helpers = require('../lib/helpers'),
 
 describe('boulevard helper', function() {
 
-    it ('should be a function', function () {
-        var result = helpers.should.be.a.Function;
+    describe('use', function () {
+
+        it ('should be a function', function () {
+            var result = helpers.use.should.be.a.Function;
+        });
+
+        it ('should return a function', function () {
+            var result = helpers.use('rev include').should.be.a.Function;
+        });
+
     });
 
-    it ('should be return a function', function () {
-        var result = helpers('rev include').should.be.a.Function;
+    describe('register', function () {
+
+        it ('should be a function', function () {
+            var result = helpers.register.should.be.a.Function;
+        });
+
+        it ('should register a helper function', function () {
+            helpers.register('mycustomhelper', function () {});
+            var result = helpers.helper.mycustomhelper.should.be.a.Function;
+        });
+
     });
 
     describe('rev', function () {
 
         it('should modify filename to include a version', function () {
 
-            var helper     = helpers('rev'),
+            var helper     = helpers.use('rev'),
                 collection = JSON.parse(JSON.stringify(fixture)),
                 result     = helper('/some/path', collection, {}, {
                     version: '1.0.0'
@@ -55,7 +72,7 @@ describe('boulevard helper', function() {
 
         it('should filter results based upon a set condition', function () {
 
-            var helper     = helpers('include'),
+            var helper     = helpers.use('include'),
                 collection = JSON.parse(JSON.stringify(fixture)),
                 result     = helper('/some/path', collection, {
                     story: true
