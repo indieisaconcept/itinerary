@@ -9,21 +9,34 @@
 'use strict';
 
 var boulevard = require('../'),
-    helpers   = require('../lib/helpers'),
 
     // boulevard supports an object being instead of a
     // file path
 
-    processor = boulevard({
+    processor = boulevard( {
+        version: '0.1.0',
         route: {
-            entertainment: {
+            foo: {
                 config: {
                     assets: {
-                        js: ['a.js', 'b.js']
+                        js: ['a.js', 'b.js'],
+                        css: ['a.css', {
+                            href: 'b.css',
+                            include: {
+                                story: false
+                            }
+                        }],
                     }
                 }
             }
         }
+    }, {
+
+        helpers: {
+            'assets.js': boulevard.helpers.use('rev'),
+            'assets.css': boulevard.helpers.use('include')
+        }
+
     });
 
 ['/entertainment/story-fni0cx12-1226975734488'].forEach(function (item) {

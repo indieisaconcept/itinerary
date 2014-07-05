@@ -61,7 +61,13 @@ module.exports = {
                 foo: {
                     config: {
                         assets: {
-                            js: ['a.js', 'b.js']
+                            js: ['a.js', 'b.js'],
+                            css: ['a.css', {
+                                href: 'b.css',
+                                include: {
+                                    story: false
+                                }
+                            }],
                         }
                     }
                 }
@@ -71,6 +77,7 @@ module.exports = {
 
             config: {
                 assets: {
+                    css: ['a.css'],
                     js: ['a_010.js', 'b_010.js']
                 }
             }

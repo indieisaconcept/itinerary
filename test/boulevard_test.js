@@ -3,7 +3,6 @@
 'use strict';
 
 var boulevard = require('../'),
-    helpers   = require('../lib/helpers'),
 
     fixtures  = require('./fixtures'),
     should    = require('should'),
@@ -38,7 +37,8 @@ var boulevard = require('../'),
 
         helpers: boulevard(fixtures.helpers.source, {
             helpers: {
-                'assets.js': helpers.use('rev')
+                'assets.js': boulevard.helpers.use('rev'),
+                'assets.css': boulevard.helpers.use('include')
             }
         })
 
@@ -148,7 +148,7 @@ describe('boulevard', function() {
 
                 it('for a route that has been modified by a helper', function (done) {
 
-                    processor.helpers('/foo').on('data', function (err, data) {
+                    processor.helpers('/foo/story-12345678-1234567891011').on('data', function (err, data) {
 
                         if (err) {
                             return done(err);
