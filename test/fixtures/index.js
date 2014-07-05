@@ -95,19 +95,21 @@ module.exports = {
                         }
                     }
                 }
+            },
+            {
+                description: "for a vertical level",
+                route: '/foo/vertical/buzz',
+                expected: {
+                    template: {
+                        vertical: true
+                    },
+                    config: {
+                        assets: {
+                            js: ['i.js', 'j.js', 'k.js', 'l.js']
+                        }
+                    }
+                }
             }
-            // },
-            // {
-            //     description: "for a vertical level",
-            //     route: '/foo/vertical/buzz',
-            //     expected: {
-            //         config: {
-            //             assets: {
-            //                 js: ['i.js', 'j.js', 'k.js', 'l.js']
-            //             }
-            //         }
-            //     }
-            // }
         ],
 
         source: {
