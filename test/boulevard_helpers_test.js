@@ -2,8 +2,8 @@
 
 'use strict';
 
-var helpers = require('../lib/helpers'),
-    should  = require('should'),
+var helper = require('../lib/helper'),
+    should = require('should'),
 
     fixture = [
         'a.css',
@@ -20,49 +20,42 @@ var helpers = require('../lib/helpers'),
                 story: true
             }
         }
-    ];
+    ],
+    noop = function () {};
 
 describe('boulevard helper', function() {
 
-    describe('use', function () {
+    it ('should be a function', function () {
+        var result = helper.should.be.a.Function;
+    });
 
-        it ('should be a function', function () {
-            var result = helpers.use.should.be.a.Function;
-        });
+    it ('should return a function', function () {
+        var result = helper('rev include').should.be.a.Function;
+    });
 
-        it ('should return a function', function () {
-            var result = helpers.use('rev include').should.be.a.Function;
-        });
+    it ('should throw an error if no name passed', function () {
+        (function () {
+            helper();
+        }).should.throw();
+    });
 
+    it ('should throw an error if a handler is not a function', function () {
+        (function () {
+            helper('nohandler', []);
+        }).should.throw();
     });
 
     describe('register', function () {
 
-        it ('should be a function', function () {
-            var result = helpers.register.should.be.a.Function;
-        });
-
-        it ('should throw an error if no name passed', function () {
-            (function () {
-                helpers.register();
-            }).should.throw();
-        });
-
-        it ('should throw an error if no handler passed', function () {
-            (function () {
-                helpers.register('nohandler');
-            }).should.throw();
-        });
-
         it ('should throw an error if a duplicate handler name is detected', function () {
             (function () {
-                helpers.register('rev');
+                helper('rev', noop);
             }).should.throw();
         });
 
         it ('should register a helper function', function () {
-            helpers.register('mycustomhelper', function () {});
-            var result = helpers.helper.mycustomhelper.should.be.a.Function;
+            helper('mycustomhelper', noop);
+            var result = helper.registered.mycustomhelper.should.be.a.Function;
         });
 
     });
@@ -71,9 +64,9 @@ describe('boulevard helper', function() {
 
         it('should modify filename to include a version', function () {
 
-            var helper     = helpers.use('rev'),
+            var handler    = helper('rev'),
                 collection = JSON.parse(JSON.stringify(fixture)),
-                result     = helper('/some/path', collection, {}, {
+                result     = handler('/some/path', collection, {}, {
                     version: '1.0.0'
                 });
 
@@ -90,9 +83,9 @@ describe('boulevard helper', function() {
 
         it('should filter results based upon a set condition', function () {
 
-            var helper     = helpers.use('include'),
+            var handler    = helper('include'),
                 collection = JSON.parse(JSON.stringify(fixture)),
-                result     = helper('/some/path', collection, {
+                result     = handler('/some/path', collection, {
                     story: true
                 });
 

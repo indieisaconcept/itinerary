@@ -10,5 +10,5 @@
 
 var boulevard = require('./lib/boulevard');
 
-boulevard.helpers = require('./lib/helpers');
-module.exports    = boulevard;
+boulevard.helper = require('./lib/helper');
+module.exports   = boulevard;

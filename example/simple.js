@@ -33,8 +33,8 @@ var boulevard = require('../'),
     }, {
 
         helpers: {
-            'assets.js': boulevard.helpers.use('rev'),
-            'assets.css': boulevard.helpers.use('include')
+            'assets.js': boulevard.helper('rev'),
+            'assets.css': boulevard.helper('include')
         }
 
     });
