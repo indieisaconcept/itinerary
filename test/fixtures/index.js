@@ -30,18 +30,30 @@ module.exports = {
 
         tests: [
             {
-                description: 'for a route that does exist',
+                description: 'should return a config for a route that does exist',
                 route: '/',
                 expected: fixture.empty
             },
             {
-                description: 'for a route that does not exist',
+                description: 'should return a config for a route that does not exist',
                 route: '/some/path/that/does/not/exist',
                 expected: fixture.empty
             },
             {
-                description: 'for a child route',
+                description: 'should return a config for a for a child route',
                 route: '/foo',
+                expected: {
+                    template: {},
+                    config: {
+                        assets: {
+                            js: ['a.js', 'b.js']
+                        }
+                    }
+                }
+            },
+            {
+                description: 'should return a config for a uri containing a route',
+                route: 'http://www.domain.com.au/foo',
                 expected: {
                     template: {},
                     config: {
@@ -61,7 +73,7 @@ module.exports = {
 
         tests: [
             {
-                description: "for a single level",
+                description: "should return a config for a single level of routes",
                 route: '/foo',
                 expected: {
                     template: {},
@@ -73,7 +85,7 @@ module.exports = {
                 }
             },
             {
-                description: "for a second level",
+                description: "should return a config for a second level of routes",
                 route: '/foo/bar',
                 expected: {
                     template: {},
@@ -85,7 +97,7 @@ module.exports = {
                 }
             },
             {
-                description: "for a third level",
+                description: "should return a config for a third level of routes",
                 route: '/foo/bar/buzz',
                 expected: {
                     template: {},
@@ -97,7 +109,7 @@ module.exports = {
                 }
             },
             {
-                description: "for a vertical level",
+                description: "should return a config for a vertical level",
                 route: '/foo/vertical/buzz',
                 expected: {
                     template: {
@@ -106,6 +118,36 @@ module.exports = {
                     config: {
                         assets: {
                             js: ['i.js', 'j.js', 'k.js', 'l.js']
+                        }
+                    }
+                }
+            },
+            {
+                skip: true,
+                description: "should return a config for a vertical level with top level route assets",
+                route: '/foo/vertical/buzz',
+                expected: {
+                    template: {
+                        vertical: true
+                    },
+                    config: {
+                        assets: {
+                            js: []
+                        }
+                    }
+                }
+            },
+            {
+                skip: true,
+                description: "should return a config for a vertical level with no top level route assets",
+                route: '/foo/vertical/buzz',
+                expected: {
+                    template: {
+                        vertical: true
+                    },
+                    config: {
+                        assets: {
+                            js: []
                         }
                     }
                 }
@@ -175,7 +217,7 @@ module.exports = {
     template: {
         tests: [
             {
-                description: 'contains template object',
+                description: 'should return determine template type based on template rule condition',
                 route: 'foo/story-12345678-1234567891011',
                 expected: {
                     template: {
@@ -205,7 +247,7 @@ module.exports = {
         tests: [
 
             {
-                description: 'for a route that has been modified by a helper',
+                description: 'should return a config for a route that has had it\'s collections modified by a helper',
                 route: '/foo/story-12345678-1234567891011',
                 expected: {
                     template: {},

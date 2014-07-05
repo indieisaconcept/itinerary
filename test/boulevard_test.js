@@ -9,9 +9,9 @@ var boulevard = require('../'),
 
 describe('boulevard', function() {
 
-    describe('should', function () {
+    describe('[ COMMON ]', function () {
 
-        it('be a function', function() {
+        it('should be a function', function() {
             var result = boulevard.should.be.an.Function;
         });
 
@@ -19,55 +19,53 @@ describe('boulevard', function() {
             var result = boulevard.helper.should.be.an.Function;
         });
 
-        it('throw an error if no manifest path specified', function () {
+        it('should throw an error if no manifest path specified', function () {
             (function () {
                 boulevard();
             }).should.throw();
         });
 
-        it('throw an error if a manifest is not found', function () {
+        it('should throw an error if a manifest is not found', function () {
             (function () {
                 boulevard('./manifest.json');
             }).should.throw();
         });
 
-        describe('return', function () {
+    });
 
-            Object.keys(fixtures).forEach(function (fixture) {
-            //['simple', 'inherited', 'helper', 'template'].forEach(function (fixture) {
+    describe('[ ROUTES ]', function () {
 
-                describe('[' + fixture + ']', function () {
+        Object.keys(fixtures).forEach(function (fixture) {
+        //['simple', 'inherited', 'helper', 'template'].forEach(function (fixture) {
 
-                    var name      = fixture,
-                        current   = fixtures[fixture],
-                        processor = boulevard(current.source, current.options || {});
+            describe('[ ' + fixture.toUpperCase() + ' ]', function () {
 
-                    // it('function if a manifest is found', function () {
-                    //     var result = processor.should.an.Function;
-                    // });
+                var name      = fixture,
+                    current   = fixtures[fixture],
+                    processor = boulevard(current.source, current.options || {});
 
-                    describe('config', function () {
+                // it('function if a manifest is found', function () {
+                //     var result = processor.should.an.Function;
+                // });
 
-                        var tests   = Array.isArray(current.tests) && current.tests || [];
+                var tests   = Array.isArray(current.tests) && current.tests || [];
 
-                        tests.forEach(function (test) {
+                tests.forEach(function (test) {
 
-                            it(test.description, function (done) {
+                    var method = test.skip ? it.skip : it;
 
-                               processor(test.route).on('data', function (err, data) {
+                    method(test.description, function (done) {
 
-                                    if (err) {
-                                        return done(err);
-                                    }
+                       processor(test.route).on('data', function (err, data) {
 
-                                    var result = data.should.be.an.Object &&
-                                                 should(data).eql(test.expected);
+                            if (err) {
+                                return done(err);
+                            }
 
-                                    done();
+                            var result = data.should.be.an.Object &&
+                                         should(data).eql(test.expected);
 
-                                });
-
-                            });
+                            done();
 
                         });
 
