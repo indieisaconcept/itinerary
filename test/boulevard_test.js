@@ -5,44 +5,7 @@
 var boulevard = require('../'),
 
     fixtures  = require('./fixtures'),
-    should    = require('should'),
-
-    // processor:
-    // configure boulevard processed required for testing
-    // here. There should be a 1:1 mapping between a processor
-    // and a fixture.
-    //
-    // fixtures can be found in ./fixtures
-
-    processor = {
-
-        simple    : boulevard(fixtures.simple.source),
-        inherited : boulevard(fixtures.inherited.source),
-        advanced  : boulevard(fixtures.advanced.source),
-
-        // templates:
-        // These are rules which are used to classify a route. These values,
-        // can then be used for filtering. They can either be a regex or a
-        // function
-
-        templates : boulevard(fixtures.simple.source, {
-            templates: {
-                story: /story-(.{8})-(\d{13})/
-            }
-        }),
-
-        // helpers:
-        // These are used to process a collection and modify or filter values as
-        // required
-
-        helpers: boulevard(fixtures.helpers.source, {
-            helpers: {
-                'assets.js': boulevard.helper('rev'),
-                'assets.css': boulevard.helper('include')
-            }
-        })
-
-    };
+    should    = require('should');
 
 describe('boulevard', function() {
 
@@ -68,96 +31,44 @@ describe('boulevard', function() {
             }).should.throw();
         });
 
-        describe('discover', function () {
-
-            it('template type for a give route if set', function (done) {
-
-               processor.templates('/story-12345678-1234567891011').on('data', function (err, data) {
-
-                    if (err) {
-                        return done(err);
-                    }
-
-                    var result = data.should.be.an.Object &&
-                                 should(data.templates.story).eql(true);
-
-                    done();
-
-                });
-
-            });
-
-        });
-
         describe('return', function () {
 
-            it('function if a manifest is found', function () {
-                var result = processor.simple.should.an.Function &&
-                             processor.advanced.should.an.Function;
-            });
+            ['simple', 'template', 'helper', 'inherited'].forEach(function (fixture) {
 
-            describe('config', function () {
+                describe('[' + fixture + ']', function () {
 
-                it('for a route that does exist', function (done) {
-                    processor.simple('/').on('data', function (err, data) {
-                        var result = data.should.be.an.Object;
-                        done();
-                    });
-                });
+                    var name      = fixture,
+                        current   = fixtures[fixture],
+                        processor = boulevard(current.source, current.options || {});
 
-                it('for a route that does not exist', function (done) {
-                    processor.simple('/some/path/that/does/not/exist').on('data', function (err, data) {
-                        var result = data.should.be.an.Object;
-                        done();
-                    });
-                });
+                    // it('function if a manifest is found', function () {
+                    //     var result = processor.should.an.Function;
+                    // });
 
-                it('for a child route', function (done) {
+                    describe('config', function () {
 
-                    processor.simple('/foo').on('data', function (err, data) {
+                        var tests   = Array.isArray(current.tests) && current.tests || [];
 
-                        if (err) {
-                            return done(err);
-                        }
+                        tests.forEach(function (test) {
 
-                        var result = data.should.be.an.Object &&
-                                     should(data.config.assets).eql(fixtures.simple.source.route.foo.config.assets);
+                            it(test.description, function (done) {
 
-                        done();
+                               processor(test.route).on('data', function (err, data) {
 
-                    });
+                                    if (err) {
+                                        return done(err);
+                                    }
 
-                });
+                                    var result = data.should.be.an.Object &&
+                                                 should(data.config).eql(test.expected.config);
 
-                it('for a route containing an inherited top level config', function (done) {
+                                    done();
 
-                    processor.inherited('/foo').on('data', function (err, data) {
+                                });
 
-                        if (err) {
-                            return done(err);
-                        }
+                            });
 
-                        var result = data.should.be.an.Object &&
-                                     should(data.config.assets).eql(fixtures.inherited.expected.config.assets);
-
-                        done();
-
-                    });
-
-                });
-
-                it('for a route that has been modified by a helper', function (done) {
-
-                    processor.helpers('/foo/story-12345678-1234567891011').on('data', function (err, data) {
-
-                        if (err) {
-                            return done(err);
-                        }
-
-                        var result = data.should.be.an.Object &&
-                                     should(data.config).eql(fixtures.helpers.expected.config);
-
-                        done();
+                        });
 
                     });
 
