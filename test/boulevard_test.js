@@ -33,7 +33,8 @@ describe('boulevard', function() {
 
         describe('return', function () {
 
-            ['simple', 'template', 'helper', 'inherited'].forEach(function (fixture) {
+            Object.keys(fixtures).forEach(function (fixture) {
+            //['simple', 'inherited', 'helper', 'template'].forEach(function (fixture) {
 
                 describe('[' + fixture + ']', function () {
 
@@ -60,7 +61,7 @@ describe('boulevard', function() {
                                     }
 
                                     var result = data.should.be.an.Object &&
-                                                 should(data.config).eql(test.expected.config);
+                                                 should(data).eql(test.expected);
 
                                     done();
 

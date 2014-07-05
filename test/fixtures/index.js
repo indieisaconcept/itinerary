@@ -3,7 +3,8 @@
 var boulevard = require('../../'),
     fixture = {
         empty: {
-            config: {}
+            config: {},
+            template: {}
         },
         source: {
             basic: {
@@ -42,6 +43,7 @@ module.exports = {
                 description: 'for a child route',
                 route: '/foo',
                 expected: {
+                    template: {},
                     config: {
                         assets: {
                             js: ['a.js', 'b.js']
@@ -62,6 +64,7 @@ module.exports = {
                 description: "for a single level",
                 route: '/foo',
                 expected: {
+                    template: {},
                     config: {
                         assets: {
                             js: ['a.js', 'b.js', 'c.js', 'd.js']
@@ -73,13 +76,38 @@ module.exports = {
                 description: "for a second level",
                 route: '/foo/bar',
                 expected: {
+                    template: {},
                     config: {
                         assets: {
                             js: ['a.js', 'b.js', 'e.js', 'f.js']
                         }
                     }
                 }
+            },
+            {
+                description: "for a third level",
+                route: '/foo/bar/buzz',
+                expected: {
+                    template: {},
+                    config: {
+                        assets: {
+                            js: ['a.js', 'b.js', 'g.js', 'h.js']
+                        }
+                    }
+                }
             }
+            // },
+            // {
+            //     description: "for a vertical level",
+            //     route: '/foo/vertical/buzz',
+            //     expected: {
+            //         config: {
+            //             assets: {
+            //                 js: ['i.js', 'j.js', 'k.js', 'l.js']
+            //             }
+            //         }
+            //     }
+            // }
         ],
 
         source: {
@@ -102,6 +130,30 @@ module.exports = {
                         config: {
                             assets: {
                                 js: ['e.js', 'f.js']
+                            }
+                        },
+                        buzz: {
+                            config: {
+                                assets: {
+                                    js: ['g.js', 'h.js']
+                                }
+                            }
+                        }
+                    },
+                    vertical: {
+                        template: {
+                            vertical: true
+                        },
+                        config: {
+                            assets: {
+                                js: ['i.js', 'j.js']
+                            }
+                        },
+                        buzz: {
+                            config: {
+                                assets: {
+                                    js: ['k.js', 'l.js']
+                                }
                             }
                         }
                     }
@@ -154,6 +206,7 @@ module.exports = {
                 description: 'for a route that has been modified by a helper',
                 route: '/foo/story-12345678-1234567891011',
                 expected: {
+                    template: {},
                     config: {
                         assets: {
                             css: ['a.css'],
@@ -188,10 +241,11 @@ module.exports = {
                 'assets.css': boulevard.helper('include')
             }
         }
-    },
-
-    advanced: {
-        source: './test/fixtures/manifest.json'
     }
+    // },
+
+    // advanced: {
+    //     source: './test/fixtures/manifest.json'
+    // }
 
 };
