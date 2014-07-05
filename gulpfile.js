@@ -42,7 +42,7 @@ gulp.task('lint', function() {
 // Perform UNIT testing
 
 gulp.task('mocha', function() {
-    gulp.src(['./test/**/*.js'], {
+    gulp.src(paths.tests, {
         read: false
     })
     .pipe(plugins.plumber())
