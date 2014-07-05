@@ -49,11 +49,11 @@ describe('boulevard', function() {
     describe('should', function () {
 
         it('be a function', function() {
-            var result = boulevard.should.an.Function;
+            var result = boulevard.should.be.an.Function;
         });
 
-        it('should have a helpers method', function() {
-            var result = boulevard.helpers.should.an.Object;
+        it('should have a helper method', function() {
+            var result = boulevard.helper.should.be.an.Function;
         });
 
         it('throw an error if no manifest path specified', function () {

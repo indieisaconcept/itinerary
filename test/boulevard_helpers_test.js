@@ -29,17 +29,17 @@ describe('boulevard helper', function() {
         var result = helper.should.be.a.Function;
     });
 
-    it ('should return a function', function () {
+    it ('should return a function if a single argument passed "helper helper"', function () {
         var result = helper('rev include').should.be.a.Function;
     });
 
-    it ('should throw an error if no name passed', function () {
+    it ('should throw an error if no name passed: helper()', function () {
         (function () {
             helper();
         }).should.throw();
     });
 
-    it ('should throw an error if a handler is not a function', function () {
+    it ('should throw an error if a handler is not a function: helper("name", [])', function () {
         (function () {
             helper('nohandler', []);
         }).should.throw();
