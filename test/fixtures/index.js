@@ -69,6 +69,42 @@ module.exports = {
 
     },
 
+    'file:json': {
+         tests: [
+            {
+                description: 'should return a config from a .json manifest',
+                route: '/foo',
+                expected: {
+                    template: {},
+                    config: {
+                        assets: {
+                            js: ['a.js', 'b.js']
+                        }
+                    }
+                }
+            }
+         ],
+         source: './test/fixtures/manifest.json'
+    },
+
+    'file:yaml': {
+         tests: [
+            {
+                description: 'should return a config from a .yaml manifest',
+                route: '/foo',
+                expected: {
+                    template: {},
+                    config: {
+                        assets: {
+                            js: ['a.js', 'b.js']
+                        }
+                    }
+                }
+            }
+         ],
+         source: './test/fixtures/manifest.yaml'
+    },
+
     inherited: {
 
         tests: [
@@ -286,10 +322,5 @@ module.exports = {
             }
         }
     }
-    // },
-
-    // advanced: {
-    //     source: './test/fixtures/manifest.json'
-    // }
 
 };

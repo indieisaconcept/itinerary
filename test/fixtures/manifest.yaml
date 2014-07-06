@@ -1,0 +1,22 @@
+# default:
+# Default information about the manifest
+
+name: "Site"
+version: "0.1.0"
+description: "Asset manifest for static content and resources"
+
+# route: ( reserved )
+# If a route matches a requested path then an asset dependency tree
+# is assembled which details the CSS, JS and any meta tags required
+
+route:
+  foo:
+
+    # reserved keys:
+    # template, config
+
+    config:
+      assets:
+        js:
+          - "a.js"
+          - "b.js"
