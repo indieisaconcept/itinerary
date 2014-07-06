@@ -1,6 +1,9 @@
 'use strict';
 
 var boulevard = require('../../'),
+    should    = require('should'),
+    util      = require('../../lib/util'),
+
     fixture = {
         empty: {
             config: {},
@@ -159,18 +162,22 @@ module.exports = {
                 }
             },
             {
-                skip: true,
-                description: "should return a config for a vertical level with top level route assets",
+                description: "should return a config for a vertical level including global assets",
                 route: '/foo/vertical/buzz',
-                expected: {
-                    template: {
-                        vertical: true
-                    },
-                    config: {
-                        assets: {
-                            js: []
-                        }
-                    }
+                expected: function (data) {
+
+                    data = util._.deepGet(data, 'config.assets.js') || [];
+
+                    var expected = ['global.js', 'i.js', 'j.js', 'k.js', 'l.js'];
+
+                    data = data.reduce(function (previous, current) {
+                        var item = current.src || current;
+                        previous.push(item);
+                        return previous;
+                    }, []);
+
+                    return should(data).eql(expected);
+
                 }
             },
             {
@@ -253,7 +260,7 @@ module.exports = {
     template: {
         tests: [
             {
-                description: 'should return determine template type based on template rule condition',
+                description: 'should return template type based on template rule condition',
                 route: 'foo/story-12345678-1234567891011',
                 expected: {
                     template: {

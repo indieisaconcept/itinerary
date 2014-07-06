@@ -3,7 +3,7 @@
 'use strict';
 
 var boulevard = require('../'),
-
+    util      = require('../lib/util'),
     fixtures  = require('./fixtures'),
     should    = require('should');
 
@@ -62,8 +62,8 @@ describe('boulevard', function() {
                                 return done(err);
                             }
 
-                            var result = data.should.be.an.Object &&
-                                         should(data).eql(test.expected);
+                            var result = util.isFunction(test.expected) && test.expected(data) ||
+                                         data.should.be.an.Object && should(data).eql(test.expected);
 
                             done();
 
