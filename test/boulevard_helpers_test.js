@@ -80,8 +80,12 @@ describe('boulevard', function() {
 
                     var handler    = helper('rev'),
                         collection = JSON.parse(JSON.stringify(fixture)),
-                        result     = handler('/some/path', collection, {}, {
-                            version: '1.0.0'
+                        result     = handler(collection, {
+                            route: '/some/path',
+                            template: {},
+                            manifest: {
+                                version: '1.0.0'
+                            }
                         });
 
                     should(result[0]).eql('a_100.css');
@@ -99,8 +103,14 @@ describe('boulevard', function() {
 
                     var handler    = helper('include'),
                         collection = JSON.parse(JSON.stringify(fixture)),
-                        result     = handler('/some/path', collection, {
-                            story: true
+                        result     = handler(collection, {
+                            route: '/some/path',
+                            template: {
+                                story: true
+                            },
+                            manifest: {
+                                version: '1.0.0'
+                            }
                         });
 
                     result = result.reduce(function (previous, current) {
