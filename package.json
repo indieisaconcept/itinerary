@@ -17,9 +17,7 @@
   },
   "keywords": [],
   "dependencies": {
-    "core-util-is": "^1.0.1",
     "debug": "1.0.2",
-    "deepmerge": "^0.2.7",
     "js-yaml": "^3.0.2",
     "json5": "^0.2.0",
     "lodash": "^2.4.1",
@@ -37,6 +35,7 @@
     "gulp-plumber": "^0.6.2",
     "gulp-util": "^2.2.19",
     "jshint-stylish": "^0.2.0",
+    "requireindex": "^1.1.0",
     "should": "^4.0.4"
   },
   "scripts": {
