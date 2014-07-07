@@ -118,7 +118,16 @@ module.exports = {
                     template: {},
                     config: {
                         assets: {
-                            js: ['a.js', 'b.js', 'c.js', 'd.js']
+                            js: [
+                                'a.js',
+                                'b.js',
+                                {
+                                    src: 'global.js',
+                                    global: true
+                                },
+                                'c.js',
+                                'd.js'
+                            ]
                         }
                     }
                 }
@@ -130,7 +139,16 @@ module.exports = {
                     template: {},
                     config: {
                         assets: {
-                            js: ['a.js', 'b.js', 'e.js', 'f.js']
+                            js: [
+                                'a.js',
+                                'b.js',
+                                {
+                                    src: 'global.js',
+                                    global: true
+                                },
+                                'e.js',
+                                'f.js'
+                            ]
                         }
                     }
                 }
@@ -142,7 +160,16 @@ module.exports = {
                     template: {},
                     config: {
                         assets: {
-                            js: ['a.js', 'b.js', 'g.js', 'h.js']
+                            js: [
+                                'a.js',
+                                'b.js',
+                                {
+                                    src: 'global.js',
+                                    global: true
+                                },
+                                'g.js',
+                                'h.js'
+                            ]
                         }
                     }
                 }
@@ -179,21 +206,6 @@ module.exports = {
                     return should(data).eql(expected);
 
                 }
-            },
-            {
-                skip: true,
-                description: "should return a config for a vertical level with no top level route assets",
-                route: '/foo/vertical/buzz',
-                expected: {
-                    template: {
-                        vertical: true
-                    },
-                    config: {
-                        assets: {
-                            js: []
-                        }
-                    }
-                }
             }
         ],
 
@@ -203,7 +215,10 @@ module.exports = {
 
                 config: {
                     assets: {
-                        js: ['a.js', 'b.js']
+                        js: ['a.js', 'b.js', {
+                            src: 'global.js',
+                            global: true
+                        }]
                     }
                 },
 
@@ -248,6 +263,12 @@ module.exports = {
 
             }
 
+        },
+
+        options: {
+            helpers: {
+                'assets.js': boulevard.helper('include')
+            }
         }
 
     },
