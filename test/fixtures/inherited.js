@@ -30,11 +30,13 @@ var boulevard = require('../../'),
 
 module.exports = {
 
-    tests: [{
+     tests: [{
         description: "should return a config for a single level of routes",
         route: '/foo',
         expected: {
-            template: {},
+            template: {
+                story: false
+            },
             config: {
                 assets: {
                     js: [].concat(common, ['c.js', 'd.js'])
@@ -45,7 +47,9 @@ module.exports = {
         description: "should return a config for a second level of routes",
         route: '/foo/bar',
         expected: {
-            template: {},
+            template: {
+                story: false
+            },
             config: {
                 assets: {
                     js: [].concat(common, ['e.js', 'f.js'])
@@ -56,7 +60,9 @@ module.exports = {
         description: "should return a config for a third level of routes",
         route: '/foo/bar/buzz',
         expected: {
-            template: {},
+            template: {
+                story: false
+            },
             config: {
                 assets: {
                     js: [].concat(common, ['g.js', 'h.js'])
@@ -151,6 +157,9 @@ module.exports = {
     options: {
         helpers: {
             'assets.js': boulevard.helper('include')
+        },
+        templates: {
+            story: /story-(.{8})-(\d{13})/
         }
     }
 
