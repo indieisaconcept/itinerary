@@ -113,7 +113,7 @@ module.exports = {
                     }
                 },
                 exclude: {
-                    global: false,
+                    inherit: false,
                     template: {
                         vertical: true
                     },
