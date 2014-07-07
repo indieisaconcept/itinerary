@@ -29,13 +29,11 @@ module.exports = {
         }
     }],
     source: {
-        basic: {
-            route: {
-                foo: {
-                    config: {
-                        assets: {
-                            js: ['a.js', 'b.js']
-                        }
+        route: {
+            foo: {
+                config: {
+                    assets: {
+                        js: ['a.js', 'b.js']
                     }
                 }
             }

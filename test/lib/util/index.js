@@ -6,7 +6,8 @@
  * Licensed under the MIT license.
  */
 
-var should = require('should');
+var should = require('should'),
+    util   = require('../../../lib/util');
 
 /**
  * @function expected

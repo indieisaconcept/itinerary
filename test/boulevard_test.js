@@ -42,21 +42,23 @@ describe('boulevard', function() {
 
                 var name      = fixture,
                     current   = fixtures[fixture],
-                    processor = boulevard(current.source, current.options || {});
+                    processor = current.source && boulevard(current.source, current.options || {}),
 
-                it('should be a function if a manifest is found', function () {
-                    var result = processor.should.an.Function;
-                });
-
-                var tests   = Array.isArray(current.tests) && current.tests || [];
+                    tests   = Array.isArray(current.tests) && current.tests || [];
 
                 tests.forEach(function (test) {
 
-                    var method = test.skip ? it.skip : it;
+                    var method = test.skip ? it.skip : it,
+                        testProcessor = test.source &&
+                                        boulevard(test.source, test.options || current.options || {}) ||
+                                        processor,
 
-                    method(test.description, function (done) {
+                        name       = test.name ? '[ ' + test.name + ' ] ' : '',
+                        labelDesc  = name + test.description;
 
-                       processor(test.route).on('data', function (err, data) {
+                    method(labelDesc, function (done) {
+
+                       testProcessor(test.route).on('data', function (err, data) {
 
                             if (err) {
                                 return done(err);

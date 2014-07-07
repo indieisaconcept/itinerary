@@ -12,7 +12,8 @@ var path = require('path');
 
 module.exports = {
     tests: [{
-        description: 'should return a config from a .json manifest',
+        name: 'JSON',
+        description: 'should return a config from a manifest',
         route: '/foo',
         expected: {
             template: {},
@@ -21,12 +22,11 @@ module.exports = {
                     js: ['a.js', 'b.js']
                 }
             }
-        }
-    }],
-    source: path.join(__dirname, './file/manifest.json')
-}, {
-    tests: [{
-        description: 'should return a config from a .yaml manifest',
+        },
+        source: path.join(__dirname, './file/manifest.json')
+    }, {
+        name: 'YAML',
+        description: 'should return a config from a manifest',
         route: '/foo',
         expected: {
             template: {},
@@ -35,7 +35,7 @@ module.exports = {
                     js: ['a.js', 'b.js']
                 }
             }
-        }
-    }],
-    source: path.join(__dirname, './file/manifest.yaml')
+        },
+        source: path.join(__dirname, './file/manifest.yaml')
+    }]
 };
