@@ -6,31 +6,33 @@
  * Licensed under the MIT license.
  */
 
-exports.async = function (collection, iterator, callback) {
+var should = require('should');
 
-    var results = [],
+/**
+ * @function expected
+ * Creates a test function based upon a key and array of
+ * results
+ *
+ * @param {string} key          dot notation string
+ * @param {array}  expected     collection of expected matches
+ *
+ * @returns {function}.
+ */
 
-        flow = function () {
+exports.expected = function (key, expected) {
 
-            if (collection.length !== 0) {
+    return function (data) {
 
-                iterator(collection.shift(), function (err, data) {
+        data = util._.deepGet(data, key) || [];
 
-                    if (err) {
-                        console.error(err);
-                    }
+        data = data.reduce(function (previous, current) {
+            var item = current && current.src || current;
+            previous.push(item);
+            return previous;
+        }, []);
 
-                    results.push(data);
-                    flow();
+        return should(data).eql(expected);
 
-                });
-
-            } else {
-                callback(null, results);
-            }
-
-        };
-
-    flow();
+    };
 
 };

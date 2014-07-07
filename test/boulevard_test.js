@@ -36,7 +36,7 @@ describe('boulevard', function() {
     describe('[ ROUTES ]', function () {
 
         Object.keys(fixtures).forEach(function (fixture) {
-        //['simple', 'inherited', 'helper', 'template'].forEach(function (fixture) {
+        //['inherited'].forEach(function (fixture) {
 
             describe('[ ' + fixture.toUpperCase() + ' ]', function () {
 
@@ -44,9 +44,9 @@ describe('boulevard', function() {
                     current   = fixtures[fixture],
                     processor = boulevard(current.source, current.options || {});
 
-                // it('function if a manifest is found', function () {
-                //     var result = processor.should.an.Function;
-                // });
+                it('should be a function if a manifest is found', function () {
+                    var result = processor.should.an.Function;
+                });
 
                 var tests   = Array.isArray(current.tests) && current.tests || [];
 
@@ -62,7 +62,7 @@ describe('boulevard', function() {
                                 return done(err);
                             }
 
-                            var result = util.isFunction(test.expected) && test.expected(data) ||
+                            var result = util._.isFunction(test.expected) && test.expected(data) ||
                                          data.should.be.an.Object && should(data).eql(test.expected);
 
                             done();

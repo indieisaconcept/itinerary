@@ -82,7 +82,9 @@ describe('boulevard', function() {
                         collection = JSON.parse(JSON.stringify(fixture)),
                         result     = handler(collection, {
                             route: '/some/path',
-                            template: {},
+                            parent: {
+                                template: {}
+                            },
                             manifest: {
                                 version: '1.0.0'
                             }
@@ -105,8 +107,10 @@ describe('boulevard', function() {
                         collection = JSON.parse(JSON.stringify(fixture)),
                         result     = handler(collection, {
                             route: '/some/path',
-                            template: {
-                                story: true
+                            parent: {
+                                template: {
+                                    story: true
+                                }
                             },
                             manifest: {
                                 version: '1.0.0'
