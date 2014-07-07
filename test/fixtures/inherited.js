@@ -18,7 +18,15 @@ var boulevard = require('../../'),
             src: 'global.js',
             global: true
         }
-    ];
+    ],
+
+    story = {
+        src: 'story.js',
+        include: {
+            story: true
+        },
+        global: true
+    };
 
 module.exports = {
 
@@ -60,6 +68,10 @@ module.exports = {
         route: '/foo/vertical/buzz',
         expected: util.expected('config.assets.js', ['global.js', 'i.js', 'j.js', 'k.js', 'l.js'])
     }, {
+        description: "should return a config for a vertical level including only story global assets",
+        route: '/foo/vertical/buzz/story-12345678-1234567891011',
+        expected: util.expected('config.assets.js', ['global.js', 'story.js', 'i.js', 'j.js', 'k.js', 'l.js'])
+    }, {
         description: "should return a config for a vertical level excluding global assets",
         route: '/foo/exclude/buzz',
         expected: util.expected('config.assets.js', ['i.js', 'j.js', 'k.js', 'l.js'])
@@ -71,7 +83,7 @@ module.exports = {
 
             config: {
                 assets: {
-                    js: [].concat(common)
+                    js: [].concat(common, story)
                 }
             },
 
