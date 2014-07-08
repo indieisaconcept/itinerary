@@ -9,7 +9,7 @@
 'use strict';
 
 var boulevard = require('../'),
-    processor = boulevard('./test/fixtures/manifest.json', {
+    processor = boulevard('./test/fixtures/file/manifest.json', {
 
         // template:
         // These are rules which are used to classify a route. These values,
@@ -44,6 +44,6 @@ var boulevard = require('../'),
 
 ['/entertainment/story-fni0cx12-1226975734488'].forEach(function (item) {
     processor(item).on('data', function (err, data) {
-        console.log(JSON.stringify(data, null, 4));
+        // console.log(JSON.stringify(data, null, 4));
     });
 });
