@@ -8,34 +8,33 @@
 
 'use strict';
 
-var path = require('path');
+var path = require('path'),
+
+    expected = function( /* Array */ data) {
+
+        return {
+            template: {},
+            config: {
+                assets: {
+                    js: data
+                }
+            }
+        };
+
+    };
 
 module.exports = {
     tests: [{
         name: 'JSON',
         description: 'should return a config from a manifest',
         route: '/foo',
-        expected: {
-            template: {},
-            config: {
-                assets: {
-                    js: ['a.js', 'b.js']
-                }
-            }
-        },
+        expected: expected(['a.js', 'b.js']),
         source: path.join(__dirname, './file/manifest.json')
     }, {
         name: 'YAML',
         description: 'should return a config from a manifest',
         route: '/foo',
-        expected: {
-            template: {},
-            config: {
-                assets: {
-                    js: ['a.js', 'b.js']
-                }
-            }
-        },
+        expected: expected(['a.js', 'b.js']),
         source: path.join(__dirname, './file/manifest.yaml')
     }]
 };
