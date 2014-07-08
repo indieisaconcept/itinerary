@@ -42,7 +42,7 @@ describe('boulevard', function() {
         it('should throw an error if no callback specified', function () {
 
             (function () {
-                boulevard('./manifest.json')('/some/path');
+                boulevard(fixtures.simple)('/some/path');
             }).should.throw();
 
         });
