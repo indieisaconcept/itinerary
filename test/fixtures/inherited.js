@@ -9,16 +9,31 @@
 'use strict';
 
 var boulevard = require('../../'),
-    util      = require('../lib/util'),
+    util = require('../lib/util'),
 
-    common = [
-        'a.js',
-        'b.js',
-        {
-            src: 'global.js',
-            global: true
-        }
-    ],
+    expected = function( /* Array */ data) {
+
+        return {
+
+            template: {
+                story: false
+            },
+
+            config: {
+                assets: {
+                    js: [
+                        'a.js',
+                        'b.js', {
+                            src: 'global.js',
+                            global: true
+                        }
+                    ].concat(data)
+                }
+            }
+
+        };
+
+    },
 
     story = {
         src: 'story.js',
@@ -30,57 +45,36 @@ var boulevard = require('../../'),
 
 module.exports = {
 
-     tests: [{
+    tests: [{
         description: "should return a config for a single level of routes",
         route: '/foo',
-        expected: {
-            template: {
-                story: false
-            },
-            config: {
-                assets: {
-                    js: [].concat(common, ['c.js', 'd.js'])
-                }
-            }
-        }
+        expected: expected(['c.js', 'd.js'])
     }, {
         description: "should return a config for a second level of routes",
         route: '/foo/bar',
-        expected: {
-            template: {
-                story: false
-            },
-            config: {
-                assets: {
-                    js: [].concat(common, ['e.js', 'f.js'])
-                }
-            }
-        }
+        expected: expected(['e.js', 'f.js'])
     }, {
         description: "should return a config for a third level of routes",
         route: '/foo/bar/buzz',
-        expected: {
-            template: {
-                story: false
-            },
-            config: {
-                assets: {
-                    js: [].concat(common, ['g.js', 'h.js'])
-                }
-            }
-        }
+        expected: expected(['g.js', 'h.js'])
     }, {
         description: "should return a config for a vertical level including global assets",
         route: '/foo/vertical/buzz',
-        expected: util.expected('config.assets.js', ['global.js', 'i.js', 'j.js', 'k.js', 'l.js'])
+        expected: util.expected('config.assets.js', ['global.js', 'i.js',
+            'j.js', 'k.js', 'l.js'
+        ])
     }, {
         description: "should return a config for a vertical level including only story global assets",
         route: '/foo/vertical/buzz/story-12345678-1234567891011',
-        expected: util.expected('config.assets.js', ['global.js', 'story.js', 'i.js', 'j.js', 'k.js', 'l.js'])
+        expected: util.expected('config.assets.js', ['global.js',
+            'story.js', 'i.js', 'j.js', 'k.js', 'l.js'
+        ])
     }, {
         description: "should return a config for a vertical level excluding global assets",
         route: '/foo/exclude/buzz',
-        expected: util.expected('config.assets.js', ['i.js', 'j.js', 'k.js', 'l.js'])
+        expected: util.expected('config.assets.js', ['i.js', 'j.js', 'k.js',
+            'l.js'
+        ])
     }],
 
     source: {
@@ -89,7 +83,13 @@ module.exports = {
 
             config: {
                 assets: {
-                    js: [].concat(common, story)
+                    js: [
+                        'a.js',
+                        'b.js', {
+                            src: 'global.js',
+                            global: true
+                        }
+                    ].concat(story)
                 }
             },
 
