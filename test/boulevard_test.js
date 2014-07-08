@@ -31,6 +31,22 @@ describe('boulevard', function() {
             }).should.throw();
         });
 
+        it('should throw an error if an invalid route processed', function (done) {
+
+            boulevard(fixtures.simple)(null, function (err) {
+                return should(err).Error && done();
+            });
+
+        });
+
+        it('should throw an error if no callback specified', function () {
+
+            (function () {
+                boulevard('./manifest.json')('/some/path');
+            }).should.throw();
+
+        });
+
     });
 
     describe('[ ROUTES ]', function () {
@@ -58,7 +74,7 @@ describe('boulevard', function() {
 
                     method(labelDesc, function (done) {
 
-                       testProcessor(test.route).on('data', function (err, data) {
+                       testProcessor(test.route, function (err, data) {
 
                             if (err) {
                                 return done(err);

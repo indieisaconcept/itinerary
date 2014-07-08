@@ -43,7 +43,7 @@ var boulevard = require('../'),
     });
 
 ['/entertainment/story-fni0cx12-1226975734488'].forEach(function (item) {
-    processor(item).on('data', function (err, data) {
-        // console.log(JSON.stringify(data, null, 4));
+    processor(item, function (err, data) {
+        console.log(JSON.stringify(data, null, 4));
     });
 });
