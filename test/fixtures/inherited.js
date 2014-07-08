@@ -11,30 +11,6 @@
 var boulevard = require('../../'),
     util = require('../lib/util'),
 
-    expected = function( /* Array */ data) {
-
-        return {
-
-            template: {
-                story: false
-            },
-
-            config: {
-                assets: {
-                    js: [
-                        'a.js',
-                        'b.js', {
-                            src: 'global.js',
-                            global: true
-                        }
-                    ].concat(data)
-                }
-            }
-
-        };
-
-    },
-
     story = {
         src: 'story.js',
         include: {
@@ -48,33 +24,31 @@ module.exports = {
     tests: [{
         description: "should return a config for a single level of routes",
         route: '/foo',
-        expected: expected(['c.js', 'd.js'])
+        expected: util.expected('config.assets.js', 'a.js b.js global.js c.js d.js')
     }, {
         description: "should return a config for a second level of routes",
         route: '/foo/bar',
-        expected: expected(['e.js', 'f.js'])
+        expected: util.expected('config.assets.js', 'a.js b.js global.js e.js f.js')
     }, {
         description: "should return a config for a third level of routes",
         route: '/foo/bar/buzz',
-        expected: expected(['g.js', 'h.js'])
+        expected: util.expected('config.assets.js', 'a.js b.js global.js g.js h.js')
+    }, {
+        description: "should return a config with global assets excluded",
+        route: '/foo/exclude_page',
+        expected: util.expected('config.assets.js', 'a.js b.js m.js n.js')
     }, {
         description: "should return a config for a vertical level including global assets",
         route: '/foo/vertical/buzz',
-        expected: util.expected('config.assets.js', ['global.js', 'i.js',
-            'j.js', 'k.js', 'l.js'
-        ])
+        expected: util.expected('config.assets.js', 'global.js i.js j.js k.js l.js')
     }, {
         description: "should return a config for a vertical level including only story global assets",
         route: '/foo/vertical/buzz/story-12345678-1234567891011',
-        expected: util.expected('config.assets.js', ['global.js',
-            'story.js', 'i.js', 'j.js', 'k.js', 'l.js'
-        ])
+        expected: util.expected('config.assets.js', 'global.js story.js i.js j.js k.js l.js')
     }, {
         description: "should return a config for a vertical level excluding global assets",
-        route: '/foo/exclude/buzz',
-        expected: util.expected('config.assets.js', ['i.js', 'j.js', 'k.js',
-            'l.js'
-        ])
+        route: '/foo/exclude_vertical/buzz',
+        expected: util.expected('config.assets.js', 'i.js j.js k.js l.js')
     }],
 
     source: {
@@ -130,7 +104,7 @@ module.exports = {
                         }
                     }
                 },
-                exclude: {
+                exclude_vertical: {
                     inherit: false,
                     template: {
                         vertical: true
@@ -145,6 +119,14 @@ module.exports = {
                             assets: {
                                 js: ['k.js', 'l.js']
                             }
+                        }
+                    }
+                },
+                exclude_page: {
+                    inherit: false,
+                    config: {
+                        assets: {
+                            js: ['m.js', 'n.js']
                         }
                     }
                 }

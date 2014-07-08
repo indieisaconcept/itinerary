@@ -22,6 +22,8 @@ var should = require('should'),
 
 exports.expected = function (key, expected) {
 
+    expected = util._.isString(expected) ? expected.split(/[ ,]+/) : expected;
+
     return function (data) {
 
         data = util._.deepGet(data, key) || [];
