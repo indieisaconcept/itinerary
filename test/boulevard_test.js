@@ -53,7 +53,7 @@ describe('boulevard', function() {
                                         boulevard(test.source, test.options || current.options || {}) ||
                                         processor,
 
-			name       = test.name ? '[ ' + test.name + ' ] (' + test.route + ')' : '(' + test.route + ') ',
+			            name       = test.name ? '[ ' + test.name + ' ] "' + test.route + '"' : '"' + test.route + '" ',
                         labelDesc  = name + test.description;
 
                     method(labelDesc, function (done) {
