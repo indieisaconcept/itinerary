@@ -10,21 +10,14 @@ var gulp     = require('gulp'),
 // Default paths to be used by tasks
 
 paths.package = ['./package.json'];
-paths.common  = ['./gulpfile.js', './lib/**/*.js'];
+paths.source  = ['./lib/**/*.js'];
+paths.common  = ['./gulpfile.js'].concat(paths.source);
 paths.tests   = ['./test/**/*.js', '!test/{temp,temp/**}'];
 paths.watch   = [].concat(paths.common, paths.tests);
 
 // ===================
 // TASKS
 // ===================
-
-// task:style
-// -------------------
-// Ensure code conforms to a specified styleguide
-
-gulp.task('style', function() {
-    return gulp.src(paths.watch).pipe(plugins.jscs());
-});
 
 // task:lint
 // -------------------
@@ -33,13 +26,15 @@ gulp.task('style', function() {
 gulp.task('lint', function() {
     return gulp.src(paths.watch)
         .pipe(plugins.jshint('.jshintrc'))
+        .pipe(plugins.plumber())
+        .pipe(plugins.jscs())
         .pipe(plugins.jshint.reporter('jshint-stylish'))
         .on('error', util.log);
 });
 
 // task:mocha
 // -------------------
-// Perform UNIT testing
+// Code tests && coverage
 
 gulp.task('mocha', function() {
     gulp.src(paths.tests, {
@@ -59,20 +54,6 @@ gulp.task('mocha', function() {
     .on('error', util.log);
 });
 
-// task:bump
-// -------------------
-// Manage semver for project
-
-gulp.task('bump', ['test'], function() {
-    var bumpType = plugins.util.env.type || 'patch'; // major.minor.patch
-    return gulp.src([paths.package])
-        .pipe(plugins.bump({
-            type: bumpType
-        }))
-        .pipe(gulp.dest('./'))
-        .on('error', util.log);
-});
-
 // task:watch
 // -------------------
 // Run specified tasks when changes detected
@@ -86,8 +67,7 @@ gulp.task('watch', ['test'], function() {
 // Aliases for a given colleciton of tasks
 
 gulp.task('test', function (cb) {
-    sequence('style', 'lint', 'mocha', cb);
+    sequence('lint', 'mocha', cb);
 });
 
-gulp.task('release', ['bump']);
 gulp.task('default', ['test']);
