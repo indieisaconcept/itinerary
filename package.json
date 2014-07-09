@@ -1,7 +1,7 @@
 {
   "name": "boulevard",
   "description": "Manage static content & resources based on a given route",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://github.com/indieisaconcept/boulevard",
   "bugs": "https://github.com/indieisaconcept/boulevard/issues",
   "license": "MIT",
