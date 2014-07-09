@@ -9,6 +9,7 @@ var gulp     = require('gulp'),
 // paths:
 // Default paths to be used by tasks
 
+paths.cov     = './test/coverage';
 paths.package = ['./package.json'];
 paths.source  = ['./lib/**/*.js'];
 paths.common  = ['./gulpfile.js'].concat(paths.source);
@@ -32,26 +33,32 @@ gulp.task('lint', function() {
         .on('error', util.log);
 });
 
-// task:mocha
+// task:istanbul
 // -------------------
 // Code tests && coverage
 
-gulp.task('mocha', function() {
-    gulp.src(paths.tests, {
-        read: false
-    })
-    .pipe(plugins.plumber())
-    .pipe(plugins.coverage.instrument({
-        pattern: ['./lib/**/*.js'],
-        debugDirectory: '_temp'
-    }))
-    .pipe(plugins.mocha({
-        reporter: 'list'
-    }))
-    .pipe(plugins.coverage.report({
-        outFile: 'test/coverage/index.html'
-    }))
-    .on('error', util.log);
+gulp.task('istanbul', function (cb) {
+
+    gulp.src(paths.source)
+        .pipe(plugins.istanbul()) // Covering files
+        .on('finish', function() {
+            gulp.src(paths.tests)
+                .pipe(plugins.plumber())
+                .pipe(plugins.mocha({
+                    reporter: 'list'
+                }))
+                .pipe(plugins.istanbul.writeReports({
+                    dir: paths.cov,
+                    reporters: [ 'lcov', 'json', 'text', 'text-summary' ],
+                    reportOpts: { dir: paths.cov },
+                }))
+                .on('finish', function() {
+                    process.chdir(__dirname);
+                    cb();
+                });
+        })
+        .on('error', util.log);
+
 });
 
 // task:watch
@@ -67,7 +74,7 @@ gulp.task('watch', ['test'], function() {
 // Aliases for a given colleciton of tasks
 
 gulp.task('test', function (cb) {
-    sequence('lint', 'mocha', cb);
+    sequence('lint', 'istanbul', cb);
 });
 
 gulp.task('default', ['test']);
