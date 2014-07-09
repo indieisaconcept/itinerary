@@ -14,9 +14,10 @@ $ npm install --save boulevard
 ## Usage
 
 Boulevard can either be used standalone or with Express.js.
+
 **Common**
 
-```
+```javascript
 var boulevard = require('boulevard'),
 	blvd      = boulevard('./path/to/manifest.yaml', options);
 ```
@@ -27,7 +28,7 @@ var boulevard = require('boulevard'),
 
 **Standalone**
 
-```
+```javascript
 blvd('/some/path/to/evalute', function (err, data) {
 	if (err) {
 		throw new Error('An error has occurred');
@@ -39,7 +40,7 @@ blvd('/some/path/to/evalute', function (err, data) {
 
 **Express Middleware**
 
-```
+```javascript
 app.use(function (req, res, next) {
 	blvd(req.path, function (err, data) {
 		if (err) {
@@ -65,7 +66,7 @@ Boulevard can be told about a manifest in two ways:
 
 A typical Boulevard manifest can be seen below.
 
-```
+```javascript
 {
     // Default information about the manifest
     "name": "Site",
@@ -107,7 +108,7 @@ The config object can contain any number of items, Boulevard however needs to be
 
 Values within this config will be recursively merged together in the case of Objects and concat for Arrays. 
 
-```
+```javascript
 'name': {
 	config: {
 		// add anything you wish here
@@ -121,7 +122,7 @@ An object literal which details the type of template a route identifies as. Thes
 
 A vertical is a convention introduced by Boulevard which essentially promotes a route to a root config. This means that routes below will only inherit assets from it's immediate parent route with a template type of vertical enabled and the route flagged as a vertical will not inherit the route config. The exception to this is when the include helper is in use.
 
-```
+```javascript
 'name': {
 	template: {
 		vertical: true,
@@ -139,7 +140,7 @@ Boulevard supports an options object passed when first called. This options obje
 
 Templates is an object literal which can be set to determine a routes template type based upon defined conditions. This is useful when there are a large number of routes.
 
-```
+```javascript
 var boulevard = require('boulevard'),
 	blvd      = boulevard('./path/to/manifest.yaml', {
 	
@@ -167,7 +168,7 @@ A helper is used by Boulevard to control how config values it processes should b
 
 Helpers can be created by following the format below.
 
-```
+```javascript
 Boulevard.helper('mycustomhelper', function (collection, data) {
 	// Do something
 	return collection
@@ -181,7 +182,7 @@ All helper functions have access to a collection which represents the data to pr
 
 To access default helpers and any that you create you must specify a space or comma delimited string of the helpers you wish to use.
 
-```
+```javascript
 Boulevard.helper('rev include');
 ```
 
@@ -190,7 +191,7 @@ Boulevard.helper('rev include');
 In order to use helpers you must first tell Boulevard what helpers to use and what config keys to process. This is done via the initial option object.
 
 
-```
+```javascript
 var boulevard = require('boulevard'),
 	blvd      = boulevard('./path/to/manifest.yaml', {
         helpers: {
@@ -206,7 +207,7 @@ Helpers will obtain it's collection to process based upon the key name passed wi
 
 ***Collection***
 
-```
+```javascript
 [ String, Object, String ]
 ```
 
@@ -214,13 +215,13 @@ The default helpers assume a collection item follows the following format, but t
 
 **String**
 
-```
+```javascript
 path/to/asset.js
 ```
 
 **Object**
 
-```
+```javascript
 {
 	src: 'path/to/asset.js',
 	global: true | false
