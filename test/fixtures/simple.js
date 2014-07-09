@@ -8,21 +8,30 @@
 
 'use strict';
 
-var empty = {
-    config: {},
-    template: {}
-};
-
 module.exports = {
 
     tests: [{
-        description: 'should return a config for a route that does exist',
+        description: 'should return a config for a root route',
         route: '/',
-        expected: empty
+        expected: {
+            template: {},
+            config: {
+                assets: {
+                    js: ['1.js', '2.js']
+                }
+            }
+        }
     }, {
         description: 'should return a config for a route that does not exist',
         route: '/some/path/that/does/not/exist',
-        expected: empty
+        expected: {
+            template: {},
+            config: {
+                assets: {
+                    js: ['1.js', '2.js']
+                }
+            }
+        }
     }, {
         description: 'should return a config for a for a child route',
         route: '/foo',
@@ -30,7 +39,7 @@ module.exports = {
             template: {},
             config: {
                 assets: {
-                    js: ['a.js', 'b.js']
+                    js: ['1.js', '2.js', 'a.js', 'b.js']
                 }
             }
         }
@@ -41,7 +50,7 @@ module.exports = {
             template: {},
             config: {
                 assets: {
-                    js: ['a.js', 'b.js']
+                    js: ['1.js', '2.js', 'a.js', 'b.js']
                 }
             }
         }
@@ -49,12 +58,26 @@ module.exports = {
 
     source: {
         route: {
+            config: {
+                assets: {
+                    js: ['1.js', '2.js']
+                }
+            },
             foo: {
                 config: {
                     assets: {
                         js: ['a.js', 'b.js']
                     }
                 }
+            }
+        }
+    },
+
+    expected: {
+        template: {},
+        config: {
+            assets: {
+                js: ['1.js', '2.js']
             }
         }
     }

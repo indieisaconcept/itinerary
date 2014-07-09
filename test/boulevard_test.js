@@ -33,7 +33,7 @@ describe('boulevard', function() {
 
         it('should throw an error if an invalid route processed', function (done) {
 
-            boulevard(fixtures.simple)(null, function (err) {
+            boulevard(fixtures.simple.source)(null, function (err) {
                 return should(err).Error && done();
             });
 
@@ -44,6 +44,18 @@ describe('boulevard', function() {
             (function () {
                 boulevard(fixtures.simple)('/some/path');
             }).should.throw();
+
+        });
+
+        it('should return from cache if requested more than once', function (done) {
+
+            var blvd = boulevard(fixtures.simple.source);
+
+            blvd('/', function (err, first) {
+                blvd('/', function (err, second) {
+                    return second.should.be.an.Object && should(first).eql(second) && done();
+                });
+            });
 
         });
 
