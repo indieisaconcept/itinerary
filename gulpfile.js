@@ -13,7 +13,7 @@ paths.cov     = './test/coverage';
 paths.package = ['./package.json'];
 paths.source  = ['./lib/**/*.js'];
 paths.common  = ['./gulpfile.js'].concat(paths.source);
-paths.tests   = ['./test/**/*.js', '!test/{temp,temp/**}'];
+paths.tests   = ['./test/*.js', '!test/{temp,coverage}/**}'];
 paths.watch   = [].concat(paths.common, paths.tests);
 
 // ===================
