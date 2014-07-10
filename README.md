@@ -1,35 +1,35 @@
-# Boulevard
+# Itinerary
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-url]][daviddm-image] [![Coverage Status][coveralls-image]][coveralls-url]
 
 
-Boulevard is a static asset manager. It's purpose is to simplify the management of CSS and JavaScript files and provide a means with which to abstract away resource configuration to avoid hard coded asset paths within a template.
+Itinerary is a static asset manager. It's purpose is to simplify the management of CSS and JavaScript files and provide a means with which to abstract away resource configuration to avoid hard coded asset paths within a template.
 
 ## Install
 
 ```bash
-$ npm install --save boulevard
+$ npm install --save itinerary
 ```
 
 ## Usage
 
-Boulevard can either be used standalone or with Express.js.
+Itinerary can either be used standalone or with Express.js.
 
 **Common**
 
 ```javascript
-var boulevard = require('boulevard'),
-	blvd      = boulevard('./path/to/manifest.yaml', options);
+var itinerary = require('itinerary'),
+	itin      = itinerary('./path/to/manifest.yaml', options);
 ```
 
-- *See manifests below for further detail on configuring Boulevard.*
-- *See advanced below for further detail on configuring Boulevard via options.*
+- *See manifests below for further detail on configuring Itinerary.*
+- *See advanced below for further detail on configuring Itinerary via options.*
 
 
 **Standalone**
 
 ```javascript
-blvd('/some/path/to/evalute', function (err, data) {
+itin('/some/path/to/evalute', function (err, data) {
 	if (err) {
 		throw new Error('An error has occurred');
 	}
@@ -42,12 +42,12 @@ blvd('/some/path/to/evalute', function (err, data) {
 
 ```javascript
 app.use(function (req, res, next) {
-	blvd(req.path, function (err, data) {
+	itin(req.path, function (err, data) {
 		if (err) {
 			return next(err);
 		}
 		// do something with data
-		res.locals.boulevard = data;
+		res.locals.itinerary = data;
 		next();
 	});	
 ));
@@ -57,14 +57,14 @@ app.use(function (req, res, next) {
 
 ### Manifests
 
-In order to use Boulevard, you must first define an asset manifest. This describes the static resources for a site.
+In order to use Itinerary, you must first define an asset manifest. This describes the static resources for a site.
 
-Boulevard can be told about a manifest in two ways:
+Itinerary can be told about a manifest in two ways:
 
 - a file path ( .json & .yaml supported ) or
 - via an object literal passed directly
 
-A typical Boulevard manifest can be seen below.
+A typical Itinerary manifest can be seen below.
 
 ```javascript
 {
@@ -104,7 +104,7 @@ All other keys are considered to be a traversable route.
 
 ##### Config
 
-The config object can contain any number of items, Boulevard however needs to be told how it should process the values it finds within ( see advanced > helpers ).
+The config object can contain any number of items, Itinerary however needs to be told how it should process the values it finds within ( see advanced > helpers ).
 
 Values within this config will be recursively merged together in the case of Objects and concat for Arrays. 
 
@@ -120,7 +120,7 @@ Values within this config will be recursively merged together in the case of Obj
 
 An object literal which details the type of template a route identifies as. These values can be anything specific to your individual needs with the exception of the template type **vertical**.
 
-A vertical is a convention introduced by Boulevard which essentially promotes a route to a root config. This means that routes below will only inherit assets from it's immediate parent route with a template type of vertical enabled and the route flagged as a vertical will not inherit the route config. The exception to this is when the include helper is in use.
+A vertical is a convention introduced by Itinerary which essentially promotes a route to a root config. This means that routes below will only inherit assets from it's immediate parent route with a template type of vertical enabled and the route flagged as a vertical will not inherit the route config. The exception to this is when the include helper is in use.
 
 ```javascript
 'name': {
@@ -134,15 +134,15 @@ Review the advanced section below for more detail on templates.
 
 ## Advanced
 
-Boulevard supports an options object passed when first called. This options object provides additional information to Boulevard which can be used during a routes processing.
+Itinerary supports an options object passed when first called. This options object provides additional information to Itinerary which can be used during a routes processing.
 
 ### Templates
 
 Templates is an object literal which can be set to determine a routes template type based upon defined conditions. This is useful when there are a large number of routes.
 
 ```javascript
-var boulevard = require('boulevard'),
-	blvd      = boulevard('./path/to/manifest.yaml', {
+var itinerary = require('itinerary'),
+	itin      = itinerary('./path/to/manifest.yaml', {
 	
         templates: {
             story   : /story-(.{8})-(\d{13})/,
@@ -162,14 +162,14 @@ A regular express can be used or alternatively a function. If using a function t
 
 ### Helpers
 
-A helper is used by Boulevard to control how config values it processes should be modified or organised. By default Boulevard comes bundle with two default helpers, rev which revs urls and include which provides more granular control over config inheritance.
+A helper is used by Itinerary to control how config values it processes should be modified or organised. By default Itinerary comes bundle with two default helpers, rev which revs urls and include which provides more granular control over config inheritance.
 
 #### Creating a helper
 
 Helpers can be created by following the format below.
 
 ```javascript
-Boulevard.helper('mycustomhelper', function (collection, data) {
+Itinerary.helper('mycustomhelper', function (collection, data) {
 	// Do something
 	return collection
 });
@@ -183,20 +183,20 @@ All helper functions have access to a collection which represents the data to pr
 To access default helpers and any that you create you must specify a space or comma delimited string of the helpers you wish to use.
 
 ```javascript
-Boulevard.helper('rev include');
+Itinerary.helper('rev include');
 ```
 
 #### Using a helper
 
-In order to use helpers you must first tell Boulevard what helpers to use and what config keys to process. This is done via the initial option object.
+In order to use helpers you must first tell Itinerary what helpers to use and what config keys to process. This is done via the initial option object.
 
 
 ```javascript
-var boulevard = require('boulevard'),
-	blvd      = boulevard('./path/to/manifest.yaml', {
+var itinerary = require('itinerary'),
+	itin      = itinerary('./path/to/manifest.yaml', {
         helpers: {
-            'assets.css': boulevard.helper('rev include'),
-            'assets.js' : boulevard.helper('rev include')
+            'assets.css': itinerary.helper('rev include'),
+            'assets.js' : itinerary.helper('rev include')
         }
 	});
 ```
@@ -246,7 +246,7 @@ This helper will modify a files name based upon the version of a manifest. If th
 
 ##### include
 
-The include helper is used to control the behaviour of verticals, whether assets added at the manifest route should be added to all routes of a certain template type or even all. 
+The include helper is used to control the behaviour of verticals, whether assets added at the manifest route should be added to all routes of a certain template type or even all.
 
 When this helper is used routes which have been flagged with inherit false will not receive any global assets defined in the manifest route. All other routes will receive these assets provided the asset has its global flag set to true and the route template matches once of it's include conditions.
 
@@ -258,6 +258,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+- **0.1.2**
+
+    - Renamed to itinerary
+    - Added helper.get for use in template engines
+
 - **0.1.1** Add missing package
 - **0.1.0** Initial release
 
@@ -266,13 +271,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 Copyright (c) 2014 Jonathan Barnett. Licensed under the MIT license.
 
-
-
-[npm-url]: https://npmjs.org/package/boulevard
-[npm-image]: https://badge.fury.io/js/boulevard.svg
-[travis-url]: https://travis-ci.org/indieisaconcept/boulevard
-[travis-image]: https://travis-ci.org/indieisaconcept/boulevard.svg?branch=master
-[daviddm-url]: https://david-dm.org/indieisaconcept/boulevard.svg?theme=shields.io
-[daviddm-image]: https://david-dm.org/indieisaconcept/boulevard
-[coveralls-url]: https://coveralls.io/r/indieisaconcept/boulevard
-[coveralls-image]: https://coveralls.io/repos/indieisaconcept/boulevard/badge.png
+[npm-url]: https://npmjs.org/package/itinerary
+[npm-image]: https://badge.fury.io/js/itinerary.svg
+[travis-url]: https://travis-ci.org/indieisaconcept/itinerary
+[travis-image]: https://travis-ci.org/indieisaconcept/itinerary.svg?branch=master
+[daviddm-url]: https://david-dm.org/indieisaconcept/itinerary.svg?theme=shields.io
+[daviddm-image]: https://david-dm.org/indieisaconcept/itinerary
+[coveralls-url]: https://coveralls.io/r/indieisaconcept/itinerary
+[coveralls-image]: https://coveralls.io/repos/indieisaconcept/itinerary/badge.png

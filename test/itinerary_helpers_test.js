@@ -23,7 +23,7 @@ var helper = require('../lib/helper'),
     ],
     noop = function () {};
 
-describe('boulevard', function() {
+describe('itinerary', function() {
 
     describe('[ HELPER ]', function () {
 

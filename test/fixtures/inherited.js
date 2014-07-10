@@ -1,6 +1,6 @@
 /*
- * boulevard
- * http://github.com/indieisaconcept/boulevard
+ * itinerary
+ * http://github.com/indieisaconcept/itinerary
  *
  * Copyright (c) 2014 Jonathan Barnett
  * Licensed under the MIT license.
@@ -8,7 +8,7 @@
 
 'use strict';
 
-var boulevard = require('../../'),
+var itinerary = require('../../'),
     util = require('../lib/util'),
 
     story = {
@@ -138,7 +138,7 @@ module.exports = {
 
     options: {
         helpers: {
-            'assets.js': boulevard.helper('include')
+            'assets.js': itinerary.helper('include')
         },
         templates: {
             story: /story-(.{8})-(\d{13})/

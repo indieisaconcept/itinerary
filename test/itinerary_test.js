@@ -2,38 +2,38 @@
 
 'use strict';
 
-var boulevard = require('../'),
+var itinerary = require('../'),
     util      = require('../lib/util'),
     fixtures  = require('./fixtures'),
     should    = require('should');
 
-describe('boulevard', function() {
+describe('itinerary', function() {
 
     describe('[ COMMON ]', function () {
 
         it('should be a function', function() {
-            var result = boulevard.should.be.an.Function;
+            var result = itinerary.should.be.an.Function;
         });
 
         it('should have a helper method', function() {
-            var result = boulevard.helper.should.be.an.Function;
+            var result = itinerary.helper.should.be.an.Function;
         });
 
         it('should throw an error if no manifest path specified', function () {
             (function () {
-                boulevard();
+                itinerary();
             }).should.throw();
         });
 
         it('should throw an error if a manifest is not found', function () {
             (function () {
-                boulevard('./manifest.json');
+                itinerary('./manifest.json');
             }).should.throw();
         });
 
         it('should throw an error if an invalid route processed', function (done) {
 
-            boulevard(fixtures.simple.source)(null, function (err) {
+            itinerary(fixtures.simple.source)(null, function (err) {
                 return should(err).Error && done();
             });
 
@@ -42,19 +42,32 @@ describe('boulevard', function() {
         it('should throw an error if no callback specified', function () {
 
             (function () {
-                boulevard(fixtures.simple)('/some/path');
+                itinerary(fixtures.simple)('/some/path');
             }).should.throw();
 
         });
 
         it('should return from cache if requested more than once', function (done) {
 
-            var blvd = boulevard(fixtures.simple.source);
+            var itin = itinerary(fixtures.simple.source);
 
-            blvd('/', function (err, first) {
-                blvd('/', function (err, second) {
+            itin('/', function (err, first) {
+                itin('/', function (err, second) {
                     return second.should.be.an.Object && should(first).eql(second) && done();
                 });
+            });
+
+        });
+
+        it('should return a helper which can be used to retrieve a config value', function (done) {
+
+            var itin = itinerary(fixtures.simple.source);
+
+            itin('/', function (err, data, helper) {
+                return data.should.be.an.Object &&
+                       helper.should.be.an.Object &&
+                       helper.get.should.be.a.Function &&
+                       should(helper.get('config.assets.js')[0]).eql('1.js') && done();
             });
 
         });
@@ -70,7 +83,7 @@ describe('boulevard', function() {
 
                 var name      = fixture,
                     current   = fixtures[fixture],
-                    processor = current.source && boulevard(current.source, current.options || {}),
+                    processor = current.source && itinerary(current.source, current.options || {}),
 
                     tests   = Array.isArray(current.tests) && current.tests || [];
 
@@ -78,7 +91,7 @@ describe('boulevard', function() {
 
                     var method = test.skip ? it.skip : it,
                         testProcessor = test.source &&
-                                        boulevard(test.source, test.options || current.options || {}) ||
+                                        itinerary(test.source, test.options || current.options || {}) ||
                                         processor,
 
 			            name       = test.name ? '[ ' + test.name + ' ] "' + test.route + '"' : '"' + test.route + '" ',
@@ -86,7 +99,7 @@ describe('boulevard', function() {
 
                     method(labelDesc, function (done) {
 
-                       testProcessor(test.route, function (err, data) {
+                       testProcessor(test.route, function (err, data, helper) {
 
                             if (err) {
                                 return done(err);

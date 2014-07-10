@@ -1,6 +1,6 @@
 /*
- * gridlock
- * http://github.com/indieisaconcept/boulevard
+ * itinerary
+ * http://github.com/indieisaconcept/itinerary
  *
  * Copyright (c) 2014 Jonathan Barnett
  * Licensed under the MIT license.
@@ -8,7 +8,7 @@
 
 'use strict';
 
-var boulevard = require('./lib/boulevard');
+var itinerary = require('./lib/itinerary');
 
-boulevard.helper = require('./lib/helper');
-module.exports   = boulevard;
+itinerary.helper = require('./lib/helper');
+module.exports   = itinerary;

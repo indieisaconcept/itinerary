@@ -1,6 +1,6 @@
 /*
- * boulevard
- * http://github.com/indieisaconcept/boulevard
+ * itinerary
+ * http://github.com/indieisaconcept/itinerary
  *
  * Copyright (c) 2014 Jonathan Barnett
  * Licensed under the MIT license.
@@ -10,25 +10,24 @@
 
 var path       = require('path'),
     express    = require('express'),
-    boulevard  = require('../../'),
-    blvd       = boulevard('./manifest.yaml'),
+    itinerary  = require('../../'),
+    itin       = itinerary('./manifest.yaml'),
 
     /**
      * @function middleware
-     * Express middleware wrapper for boulevard
+     * Express middleware wrapper for itinerary
      * processor
      */
 
     middleware = function (req, res, next) {
 
-        blvd(req.path, function (err, document) {
+        itin(req.path, function (err, document, helper) {
 
             if (err) {
                 return next(err);
             }
 
-            res.locals.boulevard = document;
-            console.log('middle', document);
+            res.locals.itinerary = helper;
 
             next();
 
