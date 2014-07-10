@@ -42,14 +42,15 @@ itin('/some/path/to/evalute', function (err, data) {
 
 ```javascript
 app.use(function (req, res, next) {
-	itin(req.path, function (err, data) {
-		if (err) {
-			return next(err);
-		}
-		// do something with data
-		res.locals.itinerary = data;
-		next();
-	});	
+
+	itin(req.path, function (err, config, helper) {
+	    if (err) {
+	        return next(err);
+	    }
+	    res.locals.itinerary = helper;
+	    next();
+	});
+
 ));
 
 ```
