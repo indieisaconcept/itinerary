@@ -31,14 +31,13 @@ var itinerary = require('itinerary'),
 **Standalone**
 
 ```javascript
-itin('/some/path/to/evalute', function (err, data) {
+itin('/some/path/to/evalute', function (err, data, helper) {
 	if (err) {
 		throw new Error('An error has occurred');
 	}
 	// do something with data
 });
 ```		
-
 
 **Express Middleware**
 
@@ -57,6 +56,14 @@ app.use(function (req, res, next) {
 
 ```
 - *See `./example/express` for a working example*
+
+Itineray will return a processed manifest for the current route and a helper object which can be passed to your template engine. This helper can be used to access specific keys in the manifest.
+
+```javascript
+helper.get('config.assets.js');  // return JavaScript assets
+helper.get('config.assets.css'); // return Stylesheet assets
+helper.get('template'); 	 // return Template object
+```
 
 ### Manifests
 
