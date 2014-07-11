@@ -5,6 +5,8 @@
 
 Itinerary is a static asset manager. It's purpose is to simplify the management of CSS and JavaScript files and provide a means with which to abstract away resource configuration to avoid hard coded asset paths within a template.
 
+Itinerary is not meant to replace your asset build pipeline, it's role is to provide a means to manage where these assets are included on your templates.
+
 ## Install
 
 ```bash
