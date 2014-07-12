@@ -74,6 +74,16 @@ describe('itinerary', function() {
 
         describe('[ REGISTERED ]', function () {
 
+            it('should not modify a collection if no helpers found', function () {
+
+                var handler    = helper(''),
+                    collection = JSON.parse(JSON.stringify(fixture)),
+                    result     = handler(collection);
+
+                should(result[0]).eql('a.css');
+
+            });
+
             describe('[ REV ]', function () {
 
                 it('should modify filename to include a version', function () {
