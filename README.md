@@ -268,6 +268,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+- **0.1.3**
+
+    - template & inherit keys should now be added to config ( backwards compatibility added )
+    - legacy tests added
+
 - **0.1.2**
 
     - Renamed to itinerary

@@ -1,7 +1,7 @@
 {
   "name": "itinerary",
   "description": "Manage your static resources using routes",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "http://github.com/indieisaconcept/itinerary",
   "bugs": "https://github.com/indieisaconcept/itinerary/issues",
   "license": "MIT",
