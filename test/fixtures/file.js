@@ -13,8 +13,8 @@ var path = require('path'),
     expected = function( /* Array */ data) {
 
         return {
-            template: {},
             config: {
+		template: {},
                 assets: {
                     js: data
                 }

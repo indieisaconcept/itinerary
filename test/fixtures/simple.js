@@ -14,8 +14,8 @@ module.exports = {
         description: 'should return a config for a root route',
         route: '/',
         expected: {
-            template: {},
             config: {
+		template: {},
                 assets: {
                     js: ['1.js', '2.js']
                 }
@@ -25,8 +25,8 @@ module.exports = {
         description: 'should return a config for a route that does not exist',
         route: '/some/path/that/does/not/exist',
         expected: {
-            template: {},
             config: {
+		template: {},
                 assets: {
                     js: ['1.js', '2.js']
                 }
@@ -36,8 +36,8 @@ module.exports = {
         description: 'should return a config for a for a child route',
         route: '/foo',
         expected: {
-            template: {},
             config: {
+		template: {},
                 assets: {
                     js: ['1.js', '2.js', 'a.js', 'b.js']
                 }
@@ -47,8 +47,8 @@ module.exports = {
         description: 'should return a config for a uri containing a route',
         route: 'http://www.domain.com.au/foo',
         expected: {
-            template: {},
             config: {
+		template: {},
                 assets: {
                     js: ['1.js', '2.js', 'a.js', 'b.js']
                 }
@@ -74,8 +74,8 @@ module.exports = {
     },
 
     expected: {
-        template: {},
         config: {
+	    template: {},
             assets: {
                 js: ['1.js', '2.js']
             }

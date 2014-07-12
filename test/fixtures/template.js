@@ -15,18 +15,30 @@
 
 module.exports = {
     tests: [{
-        description: 'should return template type based on template rule condition',
-        route: 'foo/story-12345678-1234567891011',
+	description: 'should return template type based on template regex rule condition',
+	route: '/foo/story-12345678-1234567891011',
         expected: {
-            template: {
-                story: true
-            },
             config: {
+		template: {
+		    homepage: false,
+		    story: true
+		},
                 assets: {
                     js: ['a.js', 'b.js']
                 }
             }
         }
+    },{
+	description: 'should return template type based on template function rule condition',
+	route: '/',
+	expected: {
+	    config: {
+		template: {
+		    homepage: true,
+		    story: false
+		}
+	    }
+	}
     }],
     source: {
         route: {
@@ -40,8 +52,11 @@ module.exports = {
         }
     },
     options: {
-        templates: {
-            story: /story-(.{8})-(\d{13})/
+	template: {
+	    story: /story-(.{8})-(\d{13})/,
+	    homepage: function (/* String */ route) {
+		return route.split('/').length <= 2;
+	    }
         }
     }
 };

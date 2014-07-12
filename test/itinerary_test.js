@@ -71,6 +71,16 @@ describe('itinerary', function() {
 
 	});
 
+	it('should return a helper which can be used to retrieve a config', function (done) {
+
+	    var itin = itinerary(fixtures.simple.source);
+
+	    itin('/', function (err, data, helper) {
+		return should(helper.get()).be.an.Object && done();
+	    });
+
+	});
+
 	it('should return a helper which can be used to retrieve a config value', function (done) {
 
 	    var itin = itinerary(fixtures.simple.source);
@@ -84,17 +94,17 @@ describe('itinerary', function() {
 		       should(get('assets.js')[0]).eql(expected) && done();
             });
 
-        });
+	});
 
-	// it('should return a helper which can be used to retrieve a template value', function (done) {
+	it('should return a helper which can be used to retrieve a template value', function (done) {
 
-	//     var itin = itinerary(fixtures.simple.source);
+	    var itin = itinerary(fixtures.simple.source);
 
-	//     itin('/', function (err, data, helper) {
-	//         return should(helper.get('template')).be.an.Object && done();
-	//     });
+	    itin('/', function (err, data, helper) {
+		return should(helper.get('template')).be.an.Object && done();
+	    });
 
-	// });
+	});
 
     });
 

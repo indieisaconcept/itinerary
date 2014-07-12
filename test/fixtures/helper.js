@@ -22,8 +22,8 @@ module.exports = {
             description: 'should return a config for a route that has had it\'s collections modified by a helper',
             route: '/foo/story-12345678-1234567891011',
             expected: {
-                template: {},
                 config: {
+		    template: {},
                     assets: {
                         css: ['a.css'],
                         js: ['a_010.js', 'b_010.js']
