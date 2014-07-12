@@ -1,7 +1,7 @@
 {
   "name": "itinerary",
   "description": "Manage your static resources using routes",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "http://github.com/indieisaconcept/itinerary",
   "bugs": "https://github.com/indieisaconcept/itinerary/issues",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "https://github.com/indieisaconcept/itinerary"
   },
-  "keywords": [],
+  "keywords": ["express", "config", "assets", "resources", "manifest", "middleware", "static"],
   "dependencies": {
     "debug": "1.0.2",
     "js-yaml": "^3.0.2",
