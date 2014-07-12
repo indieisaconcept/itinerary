@@ -88,10 +88,10 @@ module.exports = {
                     }
                 },
                 vertical: {
-                    template: {
-                        vertical: true
-                    },
                     config: {
+			template: {
+			    vertical: true
+			},
                         assets: {
                             js: ['i.js', 'j.js']
                         }
@@ -105,11 +105,11 @@ module.exports = {
                     }
                 },
                 exclude_vertical: {
-                    inherit: false,
-                    template: {
-                        vertical: true
-                    },
                     config: {
+			inherit: false,
+			template: {
+			    vertical: true
+			},
                         assets: {
                             js: ['i.js', 'j.js']
                         }
@@ -123,8 +123,8 @@ module.exports = {
                     }
                 },
                 exclude_page: {
-                    inherit: false,
                     config: {
+			inherit: false,
                         assets: {
                             js: ['m.js', 'n.js']
                         }
