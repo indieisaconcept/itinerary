@@ -134,9 +134,11 @@ A vertical is a convention introduced by Itinerary which essentially promotes a 
 
 ```javascript
 'name': {
-	template: {
-		vertical: true,
-		gallery: true
+	config: {
+		template: {
+			vertical: true,
+			gallery: true
+		}
 	}
 }
 ```
