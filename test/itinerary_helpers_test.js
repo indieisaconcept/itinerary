@@ -139,6 +139,77 @@ describe('itinerary', function() {
 
             });
 
+            describe('[ TEMPLATE ]', function () {
+
+                it('should compile a string template', function () {
+
+                    var handler    = helper('template'),
+                        collection = ['{{version}}'],
+                        result     = handler(collection, {
+                            manifest: {
+                                version: '1.0.0'
+                            }
+                        });
+
+                    should(result[0]).eql('1.0.0');
+
+                });
+
+                it('should compile an object with string templates', function () {
+
+                    var handler    = helper('template'),
+                        collection = [{
+                            src: '{{version}}',
+                            test: []
+                        }],
+                        result     = handler(collection, {
+                            manifest: {
+                                version: '1.0.0'
+                            }
+                        });
+
+                    should(result[0].src).eql('1.0.0');
+
+                });
+
+                describe('[ FILTER ]',function () {
+
+                    it('[ UPPERCASE ] should return an uppercase value', function () {
+
+                        var handler    = helper('template'),
+                            collection = ['{{name|uppercase}}', '{{test|uppercase}}'],
+                            result     = handler(collection, {
+                                manifest: {
+                                    name: 'itinerary',
+                                    test: []
+                                }
+                            });
+
+                        should(result[0]).eql('ITINERARY');
+                        should(result[1]).eql('');
+
+                    });
+
+                    it('[ LOWERCASE ] should return an lowercase value', function () {
+
+                        var handler    = helper('template'),
+                            collection = ['{{name|lowercase}}', '{{test|lowercase}}'],
+                            result     = handler(collection, {
+                                manifest: {
+                                    name: 'ITINERARY',
+                                    test: []
+                                }
+                            });
+
+                        should(result[0]).eql('itinerary');
+                        should(result[1]).eql('');
+
+                    });
+
+                });
+
+            });
+
         });
 
     });
