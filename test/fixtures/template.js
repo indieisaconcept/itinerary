@@ -52,11 +52,11 @@ module.exports = {
         }
     },
     options: {
-	template: {
-	    story: /story-(.{8})-(\d{13})/,
-	    homepage: function (/* String */ route) {
-		return route.split('/').length <= 2;
-	    }
+    	template: {
+    	    story: /story-(.{8})-(\d{13})/,
+    	    homepage: function (/* String */ route) {
+    		  return route.split('/').length <= 2;
+    	    }
         }
     }
 };

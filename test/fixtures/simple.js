@@ -15,7 +15,7 @@ module.exports = {
         route: '/',
         expected: {
             config: {
-		template: {},
+                template: {},
                 assets: {
                     js: ['1.js', '2.js']
                 }
@@ -26,7 +26,7 @@ module.exports = {
         route: '/some/path/that/does/not/exist',
         expected: {
             config: {
-		template: {},
+                template: {},
                 assets: {
                     js: ['1.js', '2.js']
                 }
@@ -37,7 +37,7 @@ module.exports = {
         route: '/foo',
         expected: {
             config: {
-		template: {},
+                template: {},
                 assets: {
                     js: ['1.js', '2.js', 'a.js', 'b.js']
                 }
@@ -48,7 +48,7 @@ module.exports = {
         route: 'http://www.domain.com.au/foo',
         expected: {
             config: {
-		template: {},
+                template: {},
                 assets: {
                     js: ['1.js', '2.js', 'a.js', 'b.js']
                 }
@@ -75,7 +75,7 @@ module.exports = {
 
     expected: {
         config: {
-	    template: {},
+            template: {},
             assets: {
                 js: ['1.js', '2.js']
             }

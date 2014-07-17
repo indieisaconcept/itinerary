@@ -23,7 +23,7 @@ module.exports = {
             route: '/foo/story-12345678-1234567891011',
             expected: {
                 config: {
-		    template: {},
+                    template: {},
                     assets: {
                         css: ['a.css'],
                         js: ['a_010.js', 'b_010.js']

@@ -9,7 +9,7 @@ var itinerary = require('../'),
 
 describe('itinerary', function() {
 
-    describe('[ COMMON ]', function () {
+    describe('[ COMMON ]', function() {
 
         it('should be a function', function() {
             var result = itinerary.should.be.an.Function;
@@ -19,128 +19,128 @@ describe('itinerary', function() {
             var result = itinerary.helper.should.be.an.Function;
         });
 
-        it('should throw an error if no manifest path specified', function () {
-            (function () {
+        it('should throw an error if no manifest path specified', function() {
+            (function() {
                 itinerary();
             }).should.throw();
         });
 
-        it('should throw an error if a manifest is not found', function () {
-            (function () {
+        it('should throw an error if a manifest is not found', function() {
+            (function() {
                 itinerary('./manifest.json');
             }).should.throw();
         });
 
-        it('should throw an error if an invalid route processed', function (done) {
+        it('should throw an error if an invalid route processed', function(done) {
 
-            itinerary(fixtures.simple.source)(null, function (err) {
+            itinerary(fixtures.simple.source)(null, function(err) {
                 return should(err).Error && done();
             });
 
         });
 
-        it('should throw an error if no callback specified', function () {
+        it('should throw an error if no callback specified', function() {
 
-            (function () {
+            (function() {
                 itinerary(fixtures.simple)('/some/path');
             }).should.throw();
 
         });
 
-        it('should return from cache if requested more than once', function (done) {
+        it('should return from cache if requested more than once', function(done) {
 
             var itin = itinerary(fixtures.simple.source);
 
-            itin('/', function (err, first) {
-                itin('/', function (err, second) {
+            itin('/', function(err, first) {
+                itin('/', function(err, second) {
                     return second.should.be.an.Object && should(first).eql(second) && done();
                 });
             });
 
         });
 
-	it('should return a helper which a get method', function (done) {
+        it('should return a helper which a get method', function(done) {
 
             var itin = itinerary(fixtures.simple.source);
 
-            itin('/', function (err, data, helper) {
+            itin('/', function(err, data, helper) {
                 return data.should.be.an.Object &&
-                       helper.should.be.an.Object &&
-		       helper.get.should.be.a.Function && done();
-	    });
-
-	});
-
-	it('should return a helper which can be used to retrieve a config', function (done) {
-
-	    var itin = itinerary(fixtures.simple.source);
-
-	    itin('/', function (err, data, helper) {
-		return should(helper.get()).be.an.Object && done();
-	    });
-
-	});
-
-	it('should return a helper which can be used to retrieve a config value', function (done) {
-
-	    var itin = itinerary(fixtures.simple.source);
-
-	    itin('/', function (err, data, helper) {
-
-		var get      = helper.get,
-		    expected = '1.js';
-
-		return should(get('config.assets.js')[0]).eql(expected) &&
-		       should(get('assets.js')[0]).eql(expected) && done();
+                    helper.should.be.an.Object &&
+                    helper.get.should.be.a.Function && done();
             });
 
-	});
+        });
 
-	it('should return a helper which can be used to retrieve a template value', function (done) {
+        it('should return a helper which can be used to retrieve a config', function(done) {
 
-	    var itin = itinerary(fixtures.simple.source);
+            var itin = itinerary(fixtures.simple.source);
 
-	    itin('/', function (err, data, helper) {
-		return should(helper.get('template')).be.an.Object && done();
-	    });
+            itin('/', function(err, data, helper) {
+                return should(helper.get()).be.an.Object && done();
+            });
 
-	});
+        });
+
+        it('should return a helper which can be used to retrieve a config value', function(done) {
+
+            var itin = itinerary(fixtures.simple.source);
+
+            itin('/', function(err, data, helper) {
+
+                var get = helper.get,
+                expected = '1.js';
+
+                return should(get('config.assets.js')[0]).eql(expected) &&
+                    should(get('assets.js')[0]).eql(expected) && done();
+            });
+
+        });
+
+        it('should return a helper which can be used to retrieve a template value', function(done) {
+
+            var itin = itinerary(fixtures.simple.source);
+
+            itin('/', function(err, data, helper) {
+                return should(helper.get('template')).be.an.Object && done();
+            });
+
+        });
 
     });
 
-    describe('[ ROUTES ]', function () {
+    describe('[ ROUTES ]', function() {
 
-        Object.keys(fixtures).forEach(function (fixture) {
-        //['inherited'].forEach(function (fixture) {
+        Object.keys(fixtures).forEach(function(fixture) {
+            //['inherited'].forEach(function (fixture) {
 
-            describe('[ ' + fixture.toUpperCase() + ' ]', function () {
+            describe('[ ' + fixture.toUpperCase() + ' ]', function() {
 
-                var name      = fixture,
-                    current   = fixtures[fixture],
+                var name = fixture,
+                    current = fixtures[fixture],
                     processor = current.source && itinerary(current.source, current.options || {}),
 
-                    tests   = Array.isArray(current.tests) && current.tests || [];
+                    tests = Array.isArray(current.tests) && current.tests || [];
 
-                tests.forEach(function (test) {
+                tests.forEach(function(test) {
 
                     var method = test.skip ? it.skip : it,
                         testProcessor = test.source &&
-                                        itinerary(test.source, test.options || current.options || {}) ||
-                                        processor,
+                        itinerary(test.source, test.options || current.options || {}) ||
+                        processor,
 
-			            name       = test.name ? '[ ' + test.name + ' ] "' + test.route + '"' : '"' + test.route + '" ',
-                        labelDesc  = name + test.description;
+                        name = test.name ? '[ ' + test.name + ' ] "' + test.route + '"' : '"' + test.route + '" ',
+                        labelDesc = name + test.description;
 
-                    method(labelDesc, function (done) {
+                    method(labelDesc, function(done) {
 
-                       testProcessor(test.route, function (err, data, helper) {
+                        testProcessor(test.route, function(err, data, helper) {
 
                             if (err) {
                                 return done(err);
                             }
 
                             var result = util._.isFunction(test.expected) && test.expected(data) ||
-                                         data.should.be.an.Object && should(data).eql(test.expected);
+                                data.should.be.an.Object && should(data).eql(test.expected);
 
                             done();
 

@@ -14,7 +14,7 @@ var path = require('path'),
 
         return {
             config: {
-		template: {},
+                template: {},
                 assets: {
                     js: data
                 }
