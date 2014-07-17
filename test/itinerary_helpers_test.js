@@ -139,12 +139,12 @@ describe('itinerary', function() {
 
             });
 
-            describe('[ TEMPLATE ]', function () {
+            describe('[ REPLACE ]', function () {
 
                 it('should compile a string template', function () {
 
-                    var handler    = helper('template'),
-                        collection = ['{{version}}'],
+                    var handler    = helper('replace'),
+                        collection = ['{{m.version}}'],
                         result     = handler(collection, {
                             manifest: {
                                 version: '1.0.0'
@@ -157,9 +157,9 @@ describe('itinerary', function() {
 
                 it('should compile an object with string templates', function () {
 
-                    var handler    = helper('template'),
+                    var handler    = helper('replace'),
                         collection = [{
-                            src: '{{version}}',
+                            src: '{{m.version}}',
                             test: []
                         }],
                         result     = handler(collection, {
@@ -176,8 +176,8 @@ describe('itinerary', function() {
 
                     it('[ UPPERCASE ] should return an uppercase value', function () {
 
-                        var handler    = helper('template'),
-                            collection = ['{{name|uppercase}}', '{{test|uppercase}}'],
+                        var handler    = helper('replace'),
+                            collection = ['{{m.name|uppercase}}', '{{m.test|uppercase}}'],
                             result     = handler(collection, {
                                 manifest: {
                                     name: 'itinerary',
@@ -192,8 +192,8 @@ describe('itinerary', function() {
 
                     it('[ LOWERCASE ] should return an lowercase value', function () {
 
-                        var handler    = helper('template'),
-                            collection = ['{{name|lowercase}}', '{{test|lowercase}}'],
+                        var handler    = helper('replace'),
+                            collection = ['{{m.name|lowercase}}', '{{m.test|lowercase}}'],
                             result     = handler(collection, {
                                 manifest: {
                                     name: 'ITINERARY',
