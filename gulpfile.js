@@ -61,6 +61,21 @@ gulp.task('istanbul', function (cb) {
 
 });
 
+// task:mocha
+// -------------------
+// Run mocha standalone
+
+gulp.task('mocha', function () {
+
+    gulp.src(paths.tests)
+        .pipe(plugins.plumber())
+        .pipe(plugins.mocha({
+            reporter: 'list'
+        }))
+        .on('error', util.log);
+
+});
+
 // task:watch
 // -------------------
 // Run specified tasks when changes detected
