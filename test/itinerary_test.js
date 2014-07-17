@@ -5,6 +5,7 @@
 var itinerary = require('../'),
     util      = require('../lib/util'),
     fixtures  = require('./fixtures'),
+    async     = require('async'),
     should    = require('should');
 
 describe('itinerary', function() {
@@ -47,14 +48,20 @@ describe('itinerary', function() {
 
         });
 
-        it('should return from cache if requested more than once', function(done) {
+        it('should return from cache if requested more than once', function() {
 
             var itin = itinerary(fixtures.simple.source);
 
-            itin('/', function(err, first) {
-                itin('/', function(err, second) {
-                    return second.should.be.an.Object && should(first).eql(second) && done();
-                });
+            async.series({
+                first: function(callback){
+                    itin('/', callback);
+                },
+                second: function(callback){
+                    itin('/', callback);
+                }
+            },
+            function(err, results) {
+                return results.second.should.be.an.Object && should(results.first.config).eql(results.second.config);
             });
 
         });
