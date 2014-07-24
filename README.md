@@ -37,7 +37,7 @@ itin('/some/path/to/evalute', function (err, data, helper) {
 	}
 	// do something with data
 });
-```		
+```
 
 **Express Middleware**
 
@@ -82,7 +82,7 @@ A typical Itinerary manifest can be seen below.
     "name": "Site",
     "version": "0.1.0",
     "description": "Asset manifest for static content and resources",
-    
+
     // route: ( reserved )
     "route": {
     	"config": {
@@ -107,8 +107,8 @@ A route consists of a `config` key which can contain any number of children, a `
 
 All other keys are considered to be a traversable route.
 
-| Key           | Description                               | 
-| ------------- |:-----------------------------------------:| 
+| Key           | Description                               |
+| ------------- |:-----------------------------------------:|
 | config        | The route configuration                   |
 | template      | The template the route supports           |
 
@@ -116,7 +116,7 @@ All other keys are considered to be a traversable route.
 
 The config object can contain any number of items, Itinerary however needs to be told how it should process the values it finds within ( see advanced > helpers ).
 
-Values within this config will be recursively merged together in the case of Objects and concat for Arrays. 
+Values within this config will be recursively merged together in the case of Objects and concat for Arrays.
 
 ```javascript
 'name': {
@@ -155,7 +155,7 @@ Templates is an object literal which can be set to determine a routes template t
 ```javascript
 var itinerary = require('itinerary'),
 	itin      = itinerary('./path/to/manifest.yaml', {
-	
+
         templates: {
             story   : /story-(.{8})-(\d{13})/,
             gallery : /gallery-(.{8})-(\d{13})/,
@@ -174,7 +174,7 @@ A regular express can be used or alternatively a function. If using a function t
 
 ### Helpers
 
-A helper is used by Itinerary to control how config values it processes should be modified or organised. By default Itinerary comes bundle with two default helpers, rev which revs urls and include which provides more granular control over config inheritance.
+A helper is used by Itinerary to control how config values it processes should be modified or organised. By default Itinerary comes bundle with some default helpers, rev which revs urls, include which provides more granular control over config inheritance and data which allows templated value subsitution.
 
 #### Creating a helper
 
@@ -207,13 +207,30 @@ In order to use helpers you must first tell Itinerary what helpers to use and wh
 var itinerary = require('itinerary'),
 	itin      = itinerary('./path/to/manifest.yaml', {
         helpers: {
-            'assets.css': itinerary.helper('rev include'),
-            'assets.js' : itinerary.helper('rev include')
+            'assets.css': itinerary.helper('rev include data'),
+            'assets.js' : itinerary.helper('rev include data')
         }
 	});
 ```
 
 Helpers will obtain it's collection to process based upon the key name passed within options, eg: `assets.css`. This key is resolved against a routes config object.
+
+##### Helper options
+
+Options can also be passed when specifying a helper. Helpers are then responsible for using these values where appropriate and are accessible via `this.context` from within a helper.
+
+```javascript
+ itinerary.helper('rev include data'),
+       'assets.js' : itinerary.helper('rev include data', {
+			data: {
+				reverse: function () {}
+			},
+			include: {},
+			rev: {}
+		})
+   }
+});
+```
 
 #### Default Helpers
 
@@ -237,9 +254,9 @@ path/to/asset.js
 {
 	src: 'path/to/asset.js',
 	global: true | false
-	
+
 	// what templates should this asset be included upon
-	
+
 	include: {
 		story: true,
 		vertical: false
@@ -262,13 +279,59 @@ The include helper is used to control the behaviour of verticals, whether assets
 
 When this helper is used routes which have been flagged with inherit false will not receive any global assets defined in the manifest route. All other routes will receive these assets provided the asset has its global flag set to true and the route template matches once of it's include conditions.
 
+##### data
 
+This helper provides templated values to be used for configuration values. This support is provided using the [handlebars][handlebars-url] template engine.
 
+```javascript
+{
+    "version": "0.1.0",
+    "name": "The Daily Bugle",
+    "host": "http://www.thedailybugle.com/",
+    "domains": {
+        "cdn": "http://resources.thedailybugle.com"
+    },
+    "routes": {
+        "config": {
+            "assets":
+                "css": [
+                    "{{m.domains.cdn}}/spiderman-hero-or-villian.css",
+						"{{uppercase m.domains.cdn}}/spiderman-vs-venom.css"
+                ]
+            }
+        }
+    }
+}
+```
+> Template values in config
+
+##### `m.`
+
+Other manifest values can be referenced via the helpful shortcut key `m`.
+
+##### Data Helpers
+
+These are normal handlebars helpers which can be used to modify values. By default uppercase are lowercase helpers are made available but additional helpers can be specified using helper options when first registering a helper against a config key.
+
+```javascript
+itinerary.helper('data', {
+	data: {
+		'helpername': function () {
+			// do something
+		}
+	}
+})
+```
 ## Contributing
 
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [gulp](http://gulpjs.com/).
 
 ## Release History
+
+- **0.1.5** 
+
+	- Added data helper
+ 	- Added helper options when associating to a key 
 
 - **0.1.4** Keywords update
 
@@ -290,6 +353,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 Copyright (c) 2014 Jonathan Barnett. Licensed under the MIT license.
 
+[handlebars-url]: https://github.com/wycats/handlebars.js
 [npm-url]: https://npmjs.org/package/itinerary
 [npm-image]: https://badge.fury.io/js/itinerary.svg
 [travis-url]: https://travis-ci.org/indieisaconcept/itinerary

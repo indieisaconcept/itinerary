@@ -227,7 +227,7 @@ describe('itinerary', function() {
                     it('[ CUSTOM ] use a custom helper', function () {
 
                         var handler = helper('data', {
-                                data:{
+                                data: {
                                     reverse: function (val) {
                                         return typeof val === 'string' ? val.split('').reverse().join('') : val;
                                     }
