@@ -27,17 +27,23 @@ describe('itinerary', function() {
 
     describe('[ HELPER ]', function () {
 
-        it ('should be a function', function () {
+        it ('be a function', function () {
             var result = helper.should.be.a.Function;
+        });
+
+        it ('throw an error if a function or object is not passed as a second argument', function () {
+            (function () {
+                helper('nohandler', []);
+            }).should.throw();
         });
 
         describe('[ USE ]', function () {
 
-            it ('should return a function if a single argument passed "helper helper"', function () {
+            it ('return a function if a single argument passed "helper helper"', function () {
                 var result = helper('rev include').should.be.a.Function;
             });
 
-            it ('should throw an error if no name passed: helper()', function () {
+            it ('throw an error if no name passed: helper()', function () {
                 (function () {
                     helper();
                 }).should.throw();
@@ -47,25 +53,19 @@ describe('itinerary', function() {
 
         describe('[ REGISTER ]', function () {
 
-            it ('should throw an error if a helper name is not a function when registering: helper([], [])', function () {
+            it ('throw an error if a helper name is not a function when registering: helper([], [])', function () {
                 (function () {
                     helper([], noop);
                 }).should.throw();
             });
 
-            it ('should throw an error if a handler is not a function when registering: helper("name", [])', function () {
-                (function () {
-                    helper('nohandler', []);
-                }).should.throw();
-            });
-
-            it ('should throw an error if a duplicate handler name is detected', function () {
+            it ('throw an error if a duplicate handler name is detected', function () {
                 (function () {
                     helper('rev', noop);
                 }).should.throw();
             });
 
-            it ('should register a helper function', function () {
+            it ('register a helper function', function () {
                 helper('mycustomhelper', noop);
                 var result = helper.registered.mycustomhelper.should.be.a.Function;
             });
@@ -74,7 +74,7 @@ describe('itinerary', function() {
 
         describe('[ REGISTERED ]', function () {
 
-            it('should not modify a collection if no helpers found', function () {
+            it('not modify a collection if no helpers found', function () {
 
                 var handler    = helper(''),
                     collection = JSON.parse(JSON.stringify(fixture)),
@@ -84,9 +84,27 @@ describe('itinerary', function() {
 
             });
 
+            it('pass options to helpers', function (done) {
+
+                var context    = { foo: 'bar' },
+                    collection = JSON.parse(JSON.stringify(fixture)),
+                    handler,
+                    result;
+
+                helper('custom', function () {
+                    return should(this.context).eql(context) && done();
+                });
+
+                handler = helper('custom', {
+                    custom: context
+                });
+                result = handler(collection);
+
+            });
+
             describe('[ REV ]', function () {
 
-                it('should modify filename to include a version', function () {
+                it('modify filename to include a version', function () {
 
                     var handler    = helper('rev'),
                         collection = JSON.parse(JSON.stringify(fixture)),
@@ -111,7 +129,7 @@ describe('itinerary', function() {
 
             describe('[ INCLUDE ]', function () {
 
-                it('should filter results based upon a set condition', function () {
+                it('filter results based upon a set condition', function () {
 
                     var handler    = helper('include'),
                         collection = JSON.parse(JSON.stringify(fixture)),
@@ -139,11 +157,11 @@ describe('itinerary', function() {
 
             });
 
-            describe('[ REPLACE ]', function () {
+            describe('[ DATA ]', function () {
 
-                it('should compile a string template', function () {
+                it('compile a string template', function () {
 
-                    var handler    = helper('replace'),
+                    var handler    = helper('data'),
                         collection = ['{{m.version}}'],
                         result     = handler(collection, {
                             manifest: {
@@ -155,9 +173,9 @@ describe('itinerary', function() {
 
                 });
 
-                it('should compile an object with string templates', function () {
+                it('compile an object with string templates', function () {
 
-                    var handler    = helper('replace'),
+                    var handler    = helper('data'),
                         collection = [{
                             src: '{{m.version}}',
                             test: []
@@ -172,12 +190,12 @@ describe('itinerary', function() {
 
                 });
 
-                describe('[ FILTER ]',function () {
+                describe('[ HELPER ]',function () {
 
-                    it('[ UPPERCASE ] should return an uppercase value', function () {
+                    it('[ UPPERCASE ] return an uppercase value', function () {
 
-                        var handler    = helper('replace'),
-                            collection = ['{{m.name|uppercase}}', '{{m.test|uppercase}}'],
+                        var handler    = helper('data'),
+                            collection = ['{{uppercase m.name}}', '{{uppercase m.test}}'],
                             result     = handler(collection, {
                                 manifest: {
                                     name: 'itinerary',
@@ -190,10 +208,10 @@ describe('itinerary', function() {
 
                     });
 
-                    it('[ LOWERCASE ] should return an lowercase value', function () {
+                    it('[ LOWERCASE ] return an lowercase value', function () {
 
-                        var handler    = helper('replace'),
-                            collection = ['{{m.name|lowercase}}', '{{m.test|lowercase}}'],
+                        var handler    = helper('data'),
+                            collection = ['{{lowercase m.name}}', '{{lowercase m.test}}'],
                             result     = handler(collection, {
                                 manifest: {
                                     name: 'ITINERARY',
@@ -202,6 +220,29 @@ describe('itinerary', function() {
                             });
 
                         should(result[0]).eql('itinerary');
+                        should(result[1]).eql('');
+
+                    });
+
+                    it('[ CUSTOM ] use a custom helper', function () {
+
+                        var handler = helper('data', {
+                                data:{
+                                    reverse: function (val) {
+                                        return typeof val === 'string' ? val.split('').reverse().join('') : val;
+                                    }
+                                }
+                            }),
+
+                            collection = ['{{reverse m.name}}', '{{lowercase m.test}}'],
+                            result     = handler(collection, {
+                                manifest: {
+                                    name: 'ITINERARY',
+                                    test: []
+                                }
+                            });
+
+                        should(result[0]).eql('YRARENITI');
                         should(result[1]).eql('');
 
                     });
