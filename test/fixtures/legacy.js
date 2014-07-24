@@ -22,19 +22,19 @@ var itinerary = require('../../'),
 module.exports = {
 
     tests: [{
-        description: "should return a config with global assets excluded",
+        description: "return a config with global assets excluded",
         route: '/foo/exclude_page',
         expected: util.expected('config.assets.js', 'a.js b.js m.js n.js')
     }, {
-        description: "should return a config for a vertical level including global assets",
+        description: "return a config for a vertical level including global assets",
         route: '/foo/vertical/buzz',
         expected: util.expected('config.assets.js', 'global.js i.js j.js k.js l.js')
     }, {
-        description: "should return a config for a vertical level including only story global assets",
+        description: "return a config for a vertical level including only story global assets",
         route: '/foo/vertical/buzz/story-12345678-1234567891011',
         expected: util.expected('config.assets.js', 'global.js story.js i.js j.js k.js l.js')
     }, {
-        description: "should return a config for a vertical level excluding global assets",
+        description: "return a config for a vertical level excluding global assets",
         route: '/foo/exclude_vertical/buzz',
         expected: util.expected('config.assets.js', 'i.js j.js k.js l.js')
     }],

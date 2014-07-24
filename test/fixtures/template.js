@@ -15,7 +15,7 @@
 
 module.exports = {
     tests: [{
-	description: 'should return template type based on template regex rule condition',
+	description: 'return template type based on template regex rule condition',
 	route: '/foo/story-12345678-1234567891011',
         expected: {
             config: {
@@ -29,7 +29,7 @@ module.exports = {
             }
         }
     },{
-	description: 'should return template type based on template function rule condition',
+	description: 'return template type based on template function rule condition',
 	route: '/',
 	expected: {
 	    config: {

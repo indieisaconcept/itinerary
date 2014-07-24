@@ -12,27 +12,27 @@ describe('itinerary', function() {
 
     describe('[ COMMON ]', function() {
 
-        it('should be a function', function() {
+        it('be a function', function() {
             var result = itinerary.should.be.an.Function;
         });
 
-        it('should have a helper method', function() {
+        it('have a helper method', function() {
             var result = itinerary.helper.should.be.an.Function;
         });
 
-        it('should throw an error if no manifest path specified', function() {
+        it('throw an error if no manifest path specified', function() {
             (function() {
                 itinerary();
             }).should.throw();
         });
 
-        it('should throw an error if a manifest is not found', function() {
+        it('throw an error if a manifest is not found', function() {
             (function() {
                 itinerary('./manifest.json');
             }).should.throw();
         });
 
-        it('should throw an error if an invalid route processed', function(done) {
+        it('throw an error if an invalid route processed', function(done) {
 
             itinerary(fixtures.simple.source)(null, function(err) {
                 return should(err).Error && done();
@@ -40,7 +40,7 @@ describe('itinerary', function() {
 
         });
 
-        it('should throw an error if no callback specified', function() {
+        it('throw an error if no callback specified', function() {
 
             (function() {
                 itinerary(fixtures.simple)('/some/path');
@@ -48,7 +48,7 @@ describe('itinerary', function() {
 
         });
 
-        it('should return from cache if requested more than once', function() {
+        it('return from cache if requested more than once', function() {
 
             var itin = itinerary(fixtures.simple.source);
 
@@ -66,7 +66,7 @@ describe('itinerary', function() {
 
         });
 
-        it('should return a helper which a get method', function(done) {
+        it('return a helper which a get method', function(done) {
 
             var itin = itinerary(fixtures.simple.source);
 
@@ -78,7 +78,7 @@ describe('itinerary', function() {
 
         });
 
-        it('should return a helper which can be used to retrieve a config', function(done) {
+        it('return a helper which can be used to retrieve a config', function(done) {
 
             var itin = itinerary(fixtures.simple.source);
 
@@ -88,7 +88,7 @@ describe('itinerary', function() {
 
         });
 
-        it('should return a helper which can be used to retrieve a config value', function(done) {
+        it('return a helper which can be used to retrieve a config value', function(done) {
 
             var itin = itinerary(fixtures.simple.source);
 
@@ -103,7 +103,7 @@ describe('itinerary', function() {
 
         });
 
-        it('should return a helper which can be used to retrieve a template value', function(done) {
+        it('return a helper which can be used to retrieve a template value', function(done) {
 
             var itin = itinerary(fixtures.simple.source);
 

@@ -19,7 +19,7 @@ module.exports = {
     tests: [
 
         {
-            description: 'should return a config for a route that has had it\'s collections modified by a helper',
+            description: 'return a config for a route that has had it\'s collections modified by a helper',
             route: '/foo/story-12345678-1234567891011',
             expected: {
                 config: {

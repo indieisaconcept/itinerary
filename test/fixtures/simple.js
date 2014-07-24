@@ -11,7 +11,7 @@
 module.exports = {
 
     tests: [{
-        description: 'should return a config for a root route',
+        description: 'return a config for a root route',
         route: '/',
         expected: {
             config: {
@@ -22,7 +22,7 @@ module.exports = {
             }
         }
     }, {
-        description: 'should return a config for a route that does not exist',
+        description: 'return a config for a route that does not exist',
         route: '/some/path/that/does/not/exist',
         expected: {
             config: {
@@ -33,7 +33,7 @@ module.exports = {
             }
         }
     }, {
-        description: 'should return a config for a for a child route',
+        description: 'return a config for a for a child route',
         route: '/foo',
         expected: {
             config: {
@@ -44,7 +44,7 @@ module.exports = {
             }
         }
     }, {
-        description: 'should return a config for a uri containing a route',
+        description: 'return a config for a uri containing a route',
         route: 'http://www.domain.com.au/foo',
         expected: {
             config: {
