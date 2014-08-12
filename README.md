@@ -328,6 +328,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+- **0.1.6** Added missing dependency requireindex
 - **0.1.5** 
 
 	- Added data helper

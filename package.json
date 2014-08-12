@@ -1,7 +1,7 @@
 {
   "name": "itinerary",
   "description": "Routeful static resource management",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "http://github.com/indieisaconcept/itinerary",
   "bugs": "https://github.com/indieisaconcept/itinerary/issues",
   "license": "MIT",
@@ -31,7 +31,8 @@
     "js-yaml": "^3.1.0",
     "json5": "^0.2.0",
     "lodash": "^2.4.1",
-    "lodash-deep": "^1.2.1"
+    "lodash-deep": "^1.2.1",
+    "requireindex": "^1.1.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.1",
